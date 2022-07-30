@@ -1,8 +1,7 @@
 const { Pool } = require('pg');
 
 //Postgres URL to link to
-const secret = process.env.PG_URI_SECURE;
-const PG_URI = secret;
+const PG_URI = 'postgres://iksfpgru:MYFVPkcI-udQTy4ujrHhzUTgrzy3yz3G@isilo.db.elephantsql.com/iksfpgru';
 
 //Object with connectionString to our postgresURL
 const pool = new Pool({

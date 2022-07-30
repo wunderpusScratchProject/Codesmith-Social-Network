@@ -2,12 +2,62 @@ const db = require('../Models/UserModel');
 
 const userControllers = {};
 
+// Load list of all users when residents tab is clicked.
+userControllers.loadUsers = async (req, res, next) => {
+  const text = 'SELECT * FROM residents';
+  try {
+    const usersLoad = await db.query(text);
+    res.locals.usersLoad = usersLoad;
+    return next();
+  } catch (error) {
+    return next({ log: `userControllers.loadUsers error: ${error}`, message: 'Erorr found @ userControllers.loadUsers' });
+  }
+};
+
+// Load list of all organizations when orgs tab is clicked.
+userControllers.loadOrgs = async (req, res, next) => {
+  const text = 'SELECT DISTINCT organization FROM residents';
+  try {
+    const orgsLoad = await db.query(text);
+    res.locals.orgsLoad = orgsLoad;
+    return next();
+  } catch (error) {
+    return next({ log: `userControllers.loadOrgs error: ${error}`, message: 'Erorr found @ userControllers.loadOrgs' });
+  }
+};
+
+// Load list of all cohorts when cohorts tab is clicked.
+userControllers.loadCohorts = async (req, res, next) => {
+  const text = 'SELECT DISTINCT cohort FROM residents';
+  try {
+    const cohortsLoad = await db.query(text);
+    res.locals.cohortsLoad = cohortsLoad;
+    return next();
+  } catch (error) {
+    return next({ log: `userControllers.loadCohorts error: ${error}`, message: 'Erorr found @ userControllers.loadCohorts' });
+  }
+};
+
+// Loads user profile when user is clicked throughout tabs.
+userControllers.loadUserProfile = async (req, res, next) => {
+  const { id } = req.params; 
+  const text = `SELECT * FROM residents WHERE id=${id}`;
+  try {
+    const profile = await db.query(text);
+    res.locals.profile = profile;
+    return next();
+  } catch (error) {
+    return next({ log: `userControllers.loadUserProfile error: ${error}`, message: 'Erorr found @ userControllers.loadUserProfile' });
+  }
+};
+
+
+
 //Controller to find user.
 //If req.query.query exists, we are trying to find a specific user
 //Otherwise return all users in table
-userControllers.findUser = async (req, res, next) => {
-  let text;
-  req.query.query ? text = `SELECT * FROM residents WHERE LOWER(name) LIKE LOWER(${req.query.query}) OR LOWER(company) LIKE LOWER(${req.query.query}) OR LOWER(cohort) LIKE LOWER(${req.query.query})` : text = 'SELECT * FROM residents';
+userControllers.findUserByName = async (req, res, next) => {
+  const text = `SELECT * FROM residents WHERE LOWER(name) LIKE LOWER(${req.query.name})`;
   try {
     const userFound = await db.query(text);
     res.locals.userFound = userFound;
