@@ -1,0 +1,67 @@
+{
+  "name": "y",
+  "version": "1.0.0",
+  "description": "Website for the DEER lab",
+  "main": "index.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=production node server/server.js",
+    "build": "cross-env NODE_ENV=production webpack",
+    "dev": "concurrently \"cross-env NODE_ENV=development webpack-dev-server --progress --color\" \"nodemon ./server/server.js\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nekrug/deer-lab-site.git"
+  },
+  "author": "Nick Krug",
+  "license": "ISC",
+  "dependencies": {
+    "@popperjs/core": "^2.11.5",
+    "axios": "^0.27.2",
+    "bootstrap": "^5.2.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "express-fileupload": "^1.4.0",
+    "node-fetch": "^3.2.9",
+    "pg": "^8.7.3",
+    "react": "^16.8.0",
+    "react-bootstrap": "^2.4.0",
+    "react-dom": "^16.8.0",
+    "react-hot-loader": "^4.13.0",
+    "react-router": "^6.3.0",
+    "react-router-bootstrap": "^0.26.2",
+    "react-router-dom": "^6.3.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.18.9",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "autoprefixer": "^10.4.7",
+    "babel-loader": "^8.2.3",
+    "concurrently": "^6.4.0",
+    "cross-env": "^7.0.3",
+    "css-loader": "^6.5.1",
+    "eslint": "^7.17.0",
+    "eslint-plugin-react": "^7.21.5",
+    "html-webpack-plugin": "^5.5.0",
+    "nodemon": "^2.0.19",
+    "postcss-loader": "^7.0.1",
+    "sass": "^1.54.0",
+    "sass-loader": "^13.0.2",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.64.1",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.5.0",
+    "webpack-hot-middleware": "^2.24.3"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "server/data/*",
+      "client/*"
+    ]
+  },
+  "bugs": {
+    "url": "https://github.com/nekrug/deer-lab-site/issues"
+  },
+  "homepage": "https://github.com/nekrug/deer-lab-site#readme"
+}
