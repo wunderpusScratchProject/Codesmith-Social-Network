@@ -1,6 +1,6 @@
 name: Codesmith Social Network Secrets
 
-on: push
+on: pull
 
 jobs:
   jobs1:
