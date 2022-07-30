@@ -1,8 +1,12 @@
 const path = require('path');
 const express = require('express');
+<<<<<<< HEAD
 const oauthRouter = require('./routes/oauthRouter');
 const cors = require('cors');
 
+=======
+const cors = require('cors');
+>>>>>>> dev
 const app = express();
 const PORT = 3000;
 const CLIENT_ID = "78jexcndblghpj"
