@@ -3,16 +3,11 @@ const db = require('../Models/UserModel');
 const userControllers = {};
 
 //Controller to find user.
-//If req.body.name exists, we are trying to find a specific user
+//If req.query.query exists, we are trying to find a specific user
 //Otherwise return all users in table
-
 userControllers.findUser = async (req, res, next) => {
   let text;
-  //residents WHERE cohort=FTRI9 || WHERE Company=Microsoft
-  //if req.body.method = 'searchName' => WHERE name = ${req.body.name}
-  //if req.body.method = 'searchCohort' => WHERE name = ${req.body.cohort}
-  // Maybe make one method that can search for all types. cohort, company, name. 
-  req.body.name ? text = `SELECT * FROM residents WHERE name=${req.body.name}` : text = 'SELECT * FROM residents'
+  req.query.query ? text = `SELECT * FROM residents WHERE LOWER(name) LIKE LOWER(${req.query.query}) OR LOWER(company) LIKE LOWER(${req.query.query}) OR LOWER(cohort) LIKE LOWER(${req.query.query})` : text = 'SELECT * FROM residents';
   try {
     const userFound = await db.query(text);
     res.locals.userFound = userFound;
@@ -37,10 +32,10 @@ userControllers.createUser = async (req, res, next) => {
     const text = 'INSERT INTO residents (name, photo, cohort, organization, linkedin) VALUES($1, $2, $3, $4, $5)';
     const userCreated = await db.query(text, values);
     
-    res.locals.userCreated = userCreated
+    res.locals.userCreated = userCreated;
     return next();
   } catch (err) {
-    return next({ log: `userControllers.createUser error: ${error}`, message: 'Erorr found @ userControllers.createUser' });
+    return next({ log: `userControllers.createUser error: ${err}`, message: 'Erorr found @ userControllers.createUser' });
   }
 };
 
@@ -62,31 +57,21 @@ userControllers.updateUser = async (req, res, next) => {
     res.locals.updatedUser = updatedUser;
     return next();
   } catch (err) {
-    return next({ log: `userControllers.createUser error: ${error}`, message: 'Erorr found @ userControllers.createUser' });
+    return next({ log: `userControllers.createUser error: ${err}`, message: 'Erorr found @ userControllers.createUser' });
   }
 };
 
 //delete user requiring @value ( req.body.id )
 userControllers.deleteUser = async (req, res, next) => {
   try {
-    let text = `DELETE FROM residents WHERE id=${req.body.id}`;
+    const text = `DELETE FROM residents WHERE id=${req.body.id}`;
     const userDeleted = await db.query(text);
     res.locals.userDeleted = userDeleted;
     
     return next();
   } catch (err) {
-    return next({ log: `userControllers.deleteUser error: ${error}`, message: 'Erorr found @ userControllers.deleteUser' })
+    return next({ log: `userControllers.deleteUser error: ${err}`, message: 'Erorr found @ userControllers.deleteUser' })
   }
 };
 
 module.exports = userControllers;
-
-
-
-
-
-//import x from y
-//const x require(y)
-
-//module.exports = y
-//export default y
