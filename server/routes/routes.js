@@ -1,6 +1,7 @@
 const express = require('express');
 
 const controller = require('../controllers/controllers');
+const app = require('../server');
 
 const router = express.Router();
 
@@ -17,16 +18,21 @@ const router = express.Router();
 
 /* __________Home__________*/
 
-//Get request to DB to render user info
+//Get request to DB to render user info (front-end)
 
-//Patch request from user profile updates
+//Patch request from user profile updates (front-end?)
 
-//Post request to set new cohort
+//Patch request to set new cohort (front-end?)
 
-//Post request to query DB by user name
+//Get request to query DB by user name
+router.get('/home', userControllers.findUser, (req, res) => {
+    res.status(200).json(res.locals.updateFound);
+});
 
-//Post request to query db by company name
-
+//Get request to query db by company name
+router.post('/home', userControllers.findUser, (req, res) => {
+    res.get(200).json(res.locals.updateFound);
+});
 
 
 
@@ -34,3 +40,22 @@ const router = express.Router();
 
 
 module.exports = router;
+
+/*
+// Residents table in database
+// residents (
+//       id serial PRIMARY KEY,
+//       name varchar( 100 )  NOT NULL,
+//    photo varchar( 150 ),
+//       cohort varchar( 150 ) NOT NULL,
+//    organization varchar( 150 ),
+//    linkedin varchar( 150 ) NOT NULL
+// );
+
+userControllers.'func'
+
+findUser() res.locals.updateFound
+createUser() res.locals.userCreated
+updateUser() res.locals.updateUser
+deleteUser() res.locals.userDeleted
+*/

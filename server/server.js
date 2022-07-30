@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
+const router = require('./routes/routes');
 
 const app = express();
 const PORT = 3000;
@@ -9,6 +10,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({origin: 'http://localhost:8080'}));
 
+
+app.use('/home', router);
 
 // Once we have React router working, this will keep the page from breaking if you're not on the homepage.
 app.get('/*', (req, res) => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import App from './components/App.jsx';
+// import App from './components/App.jsx';
 
 // uncomment so that webpack can bundle styles
 // import styles from './App.scss';
@@ -9,6 +9,6 @@ import App from './components/App.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 render(
-  <App />,
+  // <App />,
   document.getElementById('root')
 );
