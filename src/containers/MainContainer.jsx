@@ -23,11 +23,14 @@ export default function MainContainer() {
     //Check if cohortIsSet when isAuthenticated is changed to true
     //Fetching to the server, whether user is Authenticated and cohortisset
     
-    if (getCookie('userId') && getCookie('linkedInAuthCode')) {
-      fetch('http://localhost:8080/verifyuser')
+    if (getCookie('userId') && getCookie('linkedInAuthCode') && getCookie('linkedInAuthCode') !== 'undefined') {
+      console.log ('found a user ID and auth code, going to verify user');
+      fetch('http://localhost:8080/verifyuser', {
+        credentials: 'same-origin',
+      })
         .then(res => {
           console.log(res);
-          if (res) changeAuthenticated(true);
+          if (res.status === 200) changeAuthenticated(true);
         });
     } else {
       changeAuthenticated(false);
@@ -40,7 +43,7 @@ export default function MainContainer() {
       { 
         isAuthenticated 
           ? cohortIsSet
-            ? <HomeContainer />
+            ? <HomeContainer changeAuthenticated={changeAuthenticated}/>
             : <SetCohort setCohort={setCohort}/>
           : <LandingPage changeAuthenticated={changeAuthenticated} />
       }

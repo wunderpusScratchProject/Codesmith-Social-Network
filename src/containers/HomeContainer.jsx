@@ -24,7 +24,7 @@ export const HomeContainer = (props) => {
   } else if (active === 'Residents') {
     elem = <div className="DisplayBox"><ResidentsContainer /></div>;
   } else if (active === 'User') {
-    elem = <div className="DisplayBox"><UserContainer userId={userId}/></div>;
+    elem = <div className="DisplayBox"><UserContainer changeAuthenticated={props.changeAuthenticated} userId={userId}/></div>;
   }
 
   return (
