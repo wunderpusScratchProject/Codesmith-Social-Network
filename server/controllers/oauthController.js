@@ -10,7 +10,6 @@ const oauthController = {};
 oauthController.exchangeCode = async (req, res, next) => {
   try {
     const authCode = req.query.code;
-    console.log('authCode: ', authCode);
     const accessToken = await fetch(
       `https://www.linkedin.com/oauth/v2/accessToken?grant_type=authorization_code&code=${authCode}&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&redirect_uri=${REDIRECT_URI}`,
       {
@@ -19,11 +18,10 @@ oauthController.exchangeCode = async (req, res, next) => {
           'Content-Type': 'application/x-www-form-urlencoded',
         }
       });
-    console.log('exchange code:');
-    console.log(accessToken);
     const response = await accessToken.json();
     console.log('Response: ', response);
     res.locals.accessToken = response.access_token;
+    res.cookie('linkedInAccessToken', response.access_token);
     return next();
   } 
   catch(err) {
@@ -62,8 +60,8 @@ oauthController.callEmailAPI = async (req, res, next) => {
       }
     );
     const parsedResult = await result.json();
-    console.log('email API call result');
-    console.log(parsedResult);
+    // console.log('email API call result');
+    // console.log(parsedResult.elements[0]['handle~']);
     res.locals.email = parsedResult.elements[0]['handle~'].emailAddress;
     return next();
   }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 const CLIENT_ID = '78jexcndblghpj';
 const REDIRECT_URI = 'http%3A%2F%2Flocalhost%3A8080%2Flogin';
-const SCOPE = 'r_liteprofile';
+const SCOPE = 'r_liteprofile r_emailaddress';
 
 export const LandingPage = (props) => {
 
