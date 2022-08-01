@@ -12,4 +12,8 @@ router.post('/', userControllers.findUserByName, (req, res) => {
   return res.status(200).json(res.locals.userFound);
 });
 
+router.post('/register', userControllers.registerUser, (req, res) => {
+  return res.status(200).json(res.locals.registeredUser);
+});
+
 module.exports = router;

@@ -9,10 +9,17 @@ export const SetCohort = (props) => {
   //Set Cohort and make a PATCH/PUT request to change user's cohort
   function cohortSet() {
     //FETCH REQUEST BELOW
-
-    console.log(cohortValue + ' ' + numberValue);
+    fetch('http://localhost:8080/residents/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: 1, cohort: `${props.cohortValue} + ' ' + ${props.numberValue}`, organization: props.orgValue, linkedin: props.linkedinUrl }),
+    })
+      .then(data => data.json())
+      .then(result => {
+        console.log(result)
+        props.setCohort(true);
+      }, [])
     //Change cohortIsSet to true if successful
-    props.setCohort(true);
   }
 
   for (let i = 1; i <= 40; i++) {
