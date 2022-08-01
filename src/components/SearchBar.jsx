@@ -21,7 +21,7 @@ export const SearchBar = (props) => {
 
   return (
     <div className="SearchBarButton">
-      <input type="text" className="SearchBar" placeholder="Search by name..." value={textValue} onKeyDown={enterFunction} onChange={(e) => setTextValue(e.target.value)}></input>
+      <input type="text" className="SearchBar" placeholder="Search by name, cohort, or org..." value={textValue} onKeyDown={enterFunction} onChange={(e) => setTextValue(e.target.value)}></input>
       <button className="SearchButton" onClick={clickFunction}>Search</button>
     </div>
   );
