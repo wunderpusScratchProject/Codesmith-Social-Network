@@ -139,7 +139,7 @@ userControllers.verifyUserExists = async (req, res, next) => {
 //@value ( res.locals.userCreated ) New user created in table residents
 userControllers.createUser = async (req, res, next) => {
   try {
-    if(res.locals.shouldSkipCreateuser) return next();
+    if(res.locals.shouldSkipCreateUser) return next();
     const {
       name,
       email,
