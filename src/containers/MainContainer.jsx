@@ -51,7 +51,7 @@ export default function MainContainer() {
       {
         isAuthenticated
           ? cohortIsSet
-            ? <HomeContainer />
+            ? <HomeContainer changeAuthenticated={changeAuthenticated}/>
             : <SetCohort setCohort={setCohort} />
           : <LandingPage changeAuthenticated={changeAuthenticated} />
         //   ? <HomeContainer changeAuthenticated={changeAuthenticated}/>

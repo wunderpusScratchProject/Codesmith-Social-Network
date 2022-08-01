@@ -24,9 +24,9 @@ export const SetCohort = (props) => {
     })
       .then(data => data.json())
       .then(result => {
-        console.log(result)
+        console.log(result);
         props.setCohort(true);
-      }, [])
+      }, []);
     //Change cohortIsSet to true if successful
   }
 
