@@ -4,8 +4,8 @@ import { LandingPage } from '../components/LandingPage.jsx';
 import { SetCohort } from '../components/SetCohort.jsx';
 
 export default function MainContainer() {
-  const [isAuthenticated, changeAuthenticated] = useState(true);
-  const [cohortIsSet, setCohort] = useState(true);
+  const [isAuthenticated, changeAuthenticated] = useState(false);
+  const [cohortIsSet, setCohort] = useState(false);
 
   const getCookie = (cookie) => {
     return document.cookie
