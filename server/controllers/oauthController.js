@@ -1,4 +1,3 @@
-const fetch = require('node-fetch');
 const { CLIENT_SECRET } = require('../secrets.js');
 const fetch = require('node-fetch');
 const CLIENT_ID = '78jexcndblghpj';
@@ -20,7 +19,7 @@ oauthController.exchangeCode = async (req, res, next) => {
         }
       });
     const response = await accessToken.json();
-    console.log('Response: ', response);
+    // console.log('Response: ', response);
     res.locals.accessToken = response.access_token;
     res.cookie('linkedInAuthCode', authCode);
     return next();
@@ -42,8 +41,8 @@ oauthController.callMeAPI = async (req, res, next) => {
     );
     const parsedResult = await result.json();
     res.locals.name = parsedResult.localizedFirstName + ' ' + parsedResult.localizedLastName;
-    console.log('me API call result');
-    console.log(parsedResult);
+    // console.log('me API call result');
+    // console.log(parsedResult);
     return next();
   }
   catch(err) {

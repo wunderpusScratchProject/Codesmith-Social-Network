@@ -120,11 +120,12 @@ userControllers.verifyUserExists = async (req, res, next) => {
   try {
     const idFound = await db.query(text, [email]);
     //if email exists: create property on res.locals to skip create user middleware
-    console.log('We found an id',idFound);
     if (idFound.rows.length) {
+      console.log('We found an id',idFound.rows[0]);
       res.locals.shouldSkipCreateUser = true;
       res.cookie('userId', idFound.rows[0].id);
     } else {
+      console.log('No such user exists. Creating one');
       res.locals.shouldSkipCreateUser = false;
     } 
     return next();
