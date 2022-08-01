@@ -1,4 +1,5 @@
 const { CLIENT_SECRET } = require('../secrets.js');
+const db = require('../models/UserModel');
 
 const fetch = require('node-fetch')
 const CLIENT_ID = '78jexcndblghpj';
@@ -10,7 +11,7 @@ const oauthController = {};
 // TODO (stretch feature, to prevent CSRF attacks, which don't matter on our site, since a malicious actor can't do anything except mess with the user profile a bit): Generate unique state and store it in use cookies. https://auth0.com/docs/secure/attack-protection/state-parameters
 oauthController.exchangeCode = async (req, res, next) => {
   try {
-    const authCode = req.query.code || req.cookie.linkedInAuthCode;
+    const authCode = req.query.code || req.cookies.linkedInAuthCode;
     const accessToken = await fetch(
       `https://www.linkedin.com/oauth/v2/accessToken?grant_type=authorization_code&code=${authCode}&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&redirect_uri=${REDIRECT_URI}`,
       {
@@ -22,7 +23,7 @@ oauthController.exchangeCode = async (req, res, next) => {
     const response = await accessToken.json();
     console.log('Response: ', response);
     res.locals.accessToken = response.access_token;
-    res.cookie('linkedInAuthCode', response.access_token);
+    res.cookie('linkedInAuthCode', authCode);
     return next();
   } 
   catch(err) {
@@ -71,6 +72,16 @@ oauthController.callEmailAPI = async (req, res, next) => {
   }
 };
 
+oauthController.userComplete = async (req, res, next) => {
+  const text = `SELECT cohort FROM residents WHERE id=${req.cookies.userId} AND cohort IS NOT NULL`;
+  try {
+    const complete = db.query(text);
+    res.locals.complete = complete;
+    return next();
+  } catch (err) {
+    return next({log: 'Error caight in userComplete' });
+  }
+};
 // handle getting basic profile info
 // GET https://api.linkedin.com/v2/me?projection=(id,firstName,lastName,profilePicture(displayImage~:playableStreams))
 
