@@ -1,4 +1,4 @@
-const { CLIENT_SECRET } = require('../secrets.js');
+// const { CLIENT_SECRET } = require('../secrets.js');
 
 const CLIENT_ID = '78jexcndblghpj';
 const REDIRECT_URI = 'http%3A%2F%2Flocalhost%3A8080%2Flogin';

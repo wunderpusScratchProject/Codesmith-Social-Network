@@ -12,7 +12,7 @@ export const SetCohort = (props) => {
     fetch('http://localhost:8080/residents/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: 1, cohort: `${props.cohortValue} + ' ' + ${props.numberValue}`, organization: props.orgValue, linkedin: props.linkedinUrl }),
+      body: JSON.stringify({ id: 1, cohort: `${cohortValue} ${numberValue}`, organization: orgValue, linkedin: linkedinUrl }),
     })
       .then(data => data.json())
       .then(result => {

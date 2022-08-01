@@ -164,13 +164,12 @@ userControllers.registerUser = async (req, res, next) => {
       organization,
       linkedin
     } = req.body;
-    const values = [cohort, organization, linkedin];
-    const text = `UPDATE residents SET cohort=${cohort}, organization=${organization}, linkedin=${linkedin} WHERE id=${id}`;
-    const registeredUser = await db.query(text, values);
+    const text = `UPDATE residents SET cohort='${cohort}', organization='${organization}', linkedin='${linkedin}' WHERE id='${id}'`;
+    const registeredUser = await db.query(text);
     res.locals.registeredUser = registeredUser;
     return next();
   } catch (err) {
-    return next({ log: `userControllers.createUser error: ${err}`, message: 'Erorr found @ userControllers.createUser' });
+    return next({ log: `userControllers.registerUser error: ${err}`, message: 'Erorr found @ userControllers.registerUser' });
   }
 };
 
