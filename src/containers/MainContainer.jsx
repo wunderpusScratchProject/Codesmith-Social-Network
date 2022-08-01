@@ -6,6 +6,7 @@ import { SetCohort } from '../components/SetCohort.jsx';
 export default function MainContainer() {
   const [isAuthenticated, changeAuthenticated] = useState(false);
   const [cohortIsSet, setCohort] = useState(false);
+  // const [isComplete, changeComplete] = useState(false);
 
   const getCookie = (cookie) => {
     return document.cookie
@@ -22,9 +23,9 @@ export default function MainContainer() {
     // if cookie is not set, load the landing page
     //Check if cohortIsSet when isAuthenticated is changed to true
     //Fetching to the server, whether user is Authenticated and cohortisset
-    
+
     if (getCookie('userId') && getCookie('linkedInAuthCode') && getCookie('linkedInAuthCode') !== 'undefined') {
-      console.log ('found a user ID and auth code, going to verify user');
+      console.log('found a user ID and auth code, going to verify user');
       fetch('http://localhost:8080/verifyuser', {
         credentials: 'same-origin',
       })
@@ -35,18 +36,30 @@ export default function MainContainer() {
     } else {
       changeAuthenticated(false);
     }
-
+    if (getCookie('userId')) {
+      fetch('http://localhost:8080/verifyuser/complete')
+        .then(res => res.json())
+        .then(res => {
+          console.log(res);
+          if (res) setCohort(true);
+        });
+    }
   });
 
   return (
     <div className="MainContainer">
-      { 
-        isAuthenticated 
+      {
+        isAuthenticated
           ? cohortIsSet
-            ? <HomeContainer changeAuthenticated={changeAuthenticated}/>
-            : <SetCohort setCohort={setCohort}/>
+            ? <HomeContainer />
+            : <SetCohort setCohort={setCohort} />
           : <LandingPage changeAuthenticated={changeAuthenticated} />
+        //   ? <HomeContainer changeAuthenticated={changeAuthenticated}/>
+        //   : <SetCohort setCohort={setCohort}/>
+        // : <LandingPage changeAuthenticated={changeAuthenticated} />
       }
+
+      {/* {isComplete && <LandingPage changeComplete={changeComplete} />} */}
     </div>
   );
 }

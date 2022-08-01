@@ -6,13 +6,21 @@ export const SetCohort = (props) => {
   const [linkedinUrl, changeUrl] = useState();
   const cohortNums = [];
 
+  const getCookie = (cookie) => {
+    return document.cookie
+      .split('; ')
+      .find(row => row.startsWith(cookie + '='))
+      ?.split('=')[1];
+  };
+
+
   //Set Cohort and make a PATCH/PUT request to change user's cohort
   function cohortSet() {
     //FETCH REQUEST BELOW
     fetch('http://localhost:8080/residents/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: document.cookie.split('; userId=')[1], cohort: `${cohortValue} ${numberValue}`, organization: orgValue, linkedin: linkedinUrl }),
+      body: JSON.stringify({ id: getCookie('userId'), cohort: `${cohortValue} ${numberValue}`, organization: orgValue, linkedin: linkedinUrl }),
     })
       .then(data => data.json())
       .then(result => {
@@ -47,7 +55,7 @@ export const SetCohort = (props) => {
             <input id="orgSelect" placeholder='Insert organization name...' value={orgValue} onChange={(e) => changeOrg(e.target.value)}></input>
             <div></div>
           </div>
-          <div className='lineTitle'> LinkedIn URL:
+          <div className='lineTitle'> LinkedIn Profile URL:
             <input id="linkedSelect" placeholder='Insert LinkedIn URL...' value={linkedinUrl} onChange={(e) => changeUrl(e.target.value)}></input>
             <div></div>
           </div>
