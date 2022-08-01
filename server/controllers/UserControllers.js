@@ -85,7 +85,7 @@ userControllers.findUserById = async (req, res, next) => {
 //Controller to find users that work at a specific organization
 
 userControllers.findUserByOrganization = async (req, res, next) => {
-  console.log(req.body)
+  console.log(req.body);
   const text = `SELECT * FROM residents WHERE LOWER(organization)=LOWER('${req.body.organization}')`;
   
   try {
@@ -112,10 +112,35 @@ userControllers.findUserByCohort = async (req, res, next) => {
   }
 };
 
+//Check to see if user already exists in Codesmith Social Network Database
+userControllers.verifyUserExists = async (req, res, next) => {
+  //obtain email from prev res.locals.email stored during previous middleware function
+  const email = res.locals.email;
+  const text = 'SELECT id FROM residents WHERE email = $1';
+
+  try {
+    const idFound = await db.query(text, [email]);
+    //if email exists: create property on res.locals to skip create user middleware
+    if (idFound.rows.length) {
+      console.log('We found an id',idFound.rows[0]);
+      res.locals.shouldSkipCreateUser = true;
+      res.cookie('userId', idFound.rows[0].id);
+    } else {
+      console.log('No such user exists. Creating one');
+      res.locals.shouldSkipCreateUser = false;
+    } 
+    return next();
+  } catch (error) {
+    return next({ log: `userControllers.verifyUserExists error: ${error}`, message: 'Erorr found @ userControllers.VerifyUserExists' });
+
+  }
+};
+
 //create new User from either res.locals.newUser or req.body... Not sure from where yet.
 //@value ( res.locals.userCreated ) New user created in table residents
 userControllers.createUser = async (req, res, next) => {
   try {
+    if(res.locals.shouldSkipCreateUser) return next();
     const {
       name,
       email,
@@ -184,7 +209,7 @@ userControllers.deleteUser = async (req, res, next) => {
     
     return next();
   } catch (err) {
-    return next({ log: `userControllers.deleteUser error: ${err}`, message: 'Erorr found @ userControllers.deleteUser' })
+    return next({ log: `userControllers.deleteUser error: ${err}`, message: 'Erorr found @ userControllers.deleteUser' });
   }
 };
 
