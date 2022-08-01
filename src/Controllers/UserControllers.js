@@ -2,17 +2,62 @@ const db = require('../Models/UserModel');
 
 const userControllers = {};
 
-//Controller to find user.
-//If req.body.name exists, we are trying to find a specific user
-//Otherwise return all users in table
+// Load list of all users when residents tab is clicked.
+userControllers.loadUsers = async (req, res, next) => {
+  const text = 'SELECT * FROM residents';
+  try {
+    const usersLoad = await db.query(text);
+    res.locals.usersLoad = usersLoad;
+    return next();
+  } catch (error) {
+    return next({ log: `userControllers.loadUsers error: ${error}`, message: 'Erorr found @ userControllers.loadUsers' });
+  }
+};
 
-userControllers.findUser = async (req, res, next) => {
-  let text;
-  //residents WHERE cohort=FTRI9 || WHERE Company=Microsoft
-  //if req.body.method = 'searchName' => WHERE name = ${req.body.name}
-  //if req.body.method = 'searchCohort' => WHERE name = ${req.body.cohort}
-  // Maybe make one method that can search for all types. cohort, company, name. 
-  req.body.name ? text = `SELECT * FROM residents WHERE name=${req.body.name}` : text = 'SELECT * FROM residents'
+// Load list of all organizations when orgs tab is clicked.
+userControllers.loadOrgs = async (req, res, next) => {
+  const text = 'SELECT DISTINCT organization FROM residents';
+  try {
+    const orgsLoad = await db.query(text);
+    res.locals.orgsLoad = orgsLoad;
+    return next();
+  } catch (error) {
+    return next({ log: `userControllers.loadOrgs error: ${error}`, message: 'Erorr found @ userControllers.loadOrgs' });
+  }
+};
+
+// Load list of all cohorts when cohorts tab is clicked.
+userControllers.loadCohorts = async (req, res, next) => {
+  const text = 'SELECT DISTINCT cohort FROM residents';
+  try {
+    const cohortsLoad = await db.query(text);
+    res.locals.cohortsLoad = cohortsLoad;
+    return next();
+  } catch (error) {
+    return next({ log: `userControllers.loadCohorts error: ${error}`, message: 'Erorr found @ userControllers.loadCohorts' });
+  }
+};
+
+// Loads user profile when user is clicked throughout tabs.
+userControllers.loadUserProfile = async (req, res, next) => {
+  const { id } = req.params; 
+  const text = `SELECT * FROM residents WHERE id=${id}`;
+  try {
+    const profile = await db.query(text);
+    res.locals.profile = profile;
+    return next();
+  } catch (error) {
+    return next({ log: `userControllers.loadUserProfile error: ${error}`, message: 'Erorr found @ userControllers.loadUserProfile' });
+  }
+};
+
+
+
+//Controller to find user.
+//If req.query.query exists, we are trying to find a specific user
+//Otherwise return all users in table
+userControllers.findUserByName = async (req, res, next) => {
+  const text = `SELECT * FROM residents WHERE LOWER(name) LIKE LOWER(${req.query.name})`;
   try {
     const userFound = await db.query(text);
     res.locals.userFound = userFound;
@@ -37,10 +82,10 @@ userControllers.createUser = async (req, res, next) => {
     const text = 'INSERT INTO residents (name, photo, cohort, organization, linkedin) VALUES($1, $2, $3, $4, $5)';
     const userCreated = await db.query(text, values);
     
-    res.locals.userCreated = userCreated
+    res.locals.userCreated = userCreated;
     return next();
   } catch (err) {
-    return next({ log: `userControllers.createUser error: ${error}`, message: 'Erorr found @ userControllers.createUser' });
+    return next({ log: `userControllers.createUser error: ${err}`, message: 'Erorr found @ userControllers.createUser' });
   }
 };
 
@@ -62,31 +107,21 @@ userControllers.updateUser = async (req, res, next) => {
     res.locals.updatedUser = updatedUser;
     return next();
   } catch (err) {
-    return next({ log: `userControllers.createUser error: ${error}`, message: 'Erorr found @ userControllers.createUser' });
+    return next({ log: `userControllers.createUser error: ${err}`, message: 'Erorr found @ userControllers.createUser' });
   }
 };
 
 //delete user requiring @value ( req.body.id )
 userControllers.deleteUser = async (req, res, next) => {
   try {
-    let text = `DELETE FROM residents WHERE id=${req.body.id}`;
+    const text = `DELETE FROM residents WHERE id=${req.body.id}`;
     const userDeleted = await db.query(text);
     res.locals.userDeleted = userDeleted;
     
     return next();
   } catch (err) {
-    return next({ log: `userControllers.deleteUser error: ${error}`, message: 'Erorr found @ userControllers.deleteUser' })
+    return next({ log: `userControllers.deleteUser error: ${err}`, message: 'Erorr found @ userControllers.deleteUser' })
   }
 };
 
 module.exports = userControllers;
-
-
-
-
-
-//import x from y
-//const x require(y)
-
-//module.exports = y
-//export default y

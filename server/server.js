@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const PORT = 3000;
-
+const userControllers = require('../src/controllers/UserControllers');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({origin: 'http://localhost:8080'}));
@@ -15,8 +15,10 @@ app.get('/*', (req, res) => {
 });
 
 
+
 // catch-all route handler for any requests to an unknown route
 app.use('*', (req, res) => res.sendStatus(404));
+
 
 
 // global error handler
