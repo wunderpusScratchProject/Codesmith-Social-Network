@@ -1,7 +1,7 @@
 const { Pool } = require('pg');
 
 //Postgres URL to link to
-const PG_URI = 'link';
+const PG_URI = 'postgres://llrsxwel:F5ZNqUVz6IMWg1hF2uDQF6EDl12_ku64@queenie.db.elephantsql.com/llrsxwel';
 
 //Object with connectionString to our postgresURL
 const pool = new Pool({

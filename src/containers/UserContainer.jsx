@@ -5,6 +5,7 @@ import { ResidentDetails } from '../components/ResidentDetails.jsx';
 
 export const UserContainer = (props) => {
   const [user, setUser] = useState({});
+  const [userIcon, setUserIcon] = useState({});
 
   useEffect(() => {
     fetch('http://localhost:8080/residents/id', {
@@ -15,16 +16,33 @@ export const UserContainer = (props) => {
       })
     })
       .then(res => res.json())
-      .then(res => setUser(res));
+      .then(res => {
+        setUser(res);
+        return res;
+      })
+      .then(res => setUserIcon({ name: res.name, photo: res.photo }));
   },[]);
+
+  function changeInput(e, key) {
+    console.log(key);
+    console.log(e.target.value);
+    setUser({
+      ...user,
+      [key]: e.target.value,
+    });
+  }
+
+  function saveFunction() {
+    console.log(user);
+  }
 
   console.log(user);
   return (
     <div className="UserContainer">
       <div className="ResidentsProfile">
-        <ResidentBox photo={user.photo} name={user.name}/>
+        <ResidentBox photo={userIcon.photo} name={userIcon.name}/>
       </div>
-      <ResidentDetails name={user.name} email={user.email} linkedin={user.linkedin} message={user.message} organization={user.organization} photo={user.photo} />
+      <ResidentDetails user={user} saveFunction={saveFunction} changeInput={changeInput}/>
     </div>
   );
 };
