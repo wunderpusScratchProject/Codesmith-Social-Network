@@ -3,6 +3,7 @@ const fs = require('fs');
 const express = require('express');
 const cors = require('cors');
 // const https = require('https');
+const cookieParser = require('cookie-parser');
 const app = express();
 const PORT = 3000;
 const residentRouter = require('./routes/resident');
@@ -17,6 +18,7 @@ const cert = fs.readFileSync(path.join(__dirname,'../cert/CA/localhost/localhost
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(cors({origin: 'http://localhost:8080'}));
 
 app.use('/residents', residentRouter);

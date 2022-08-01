@@ -1,7 +1,7 @@
-const CLIENT_SECRET = require('../secrets.js');
+const { CLIENT_SECRET } = require('../secrets.js');
 
 const CLIENT_ID = '78jexcndblghpj';
-const REDIRECT_URI = 'http%3A%2F%2Flocalhost%3A8080%2';
+const REDIRECT_URI = 'http%3A%2F%2Flocalhost%3A8080%2Flogin';
 
 const oauthController = {};
 // TODO: Refactor this route to use our NODE_ENV to point to localhost:3000 if production and 8080 if dev. Then switch localhost:3000 again once we get the site hosted.
@@ -10,17 +10,20 @@ const oauthController = {};
 oauthController.exchangeCode = async (req, res, next) => {
   try {
     const authCode = req.query.code;
-    console.log(authCode);
-    console.log(CLIENT_SECRET);
-    // console log to make sure the URL is properly formed:
-    console.log(`https://www.linkedin.com/oauth/v2/accessToken/?grant_type=authorization_code&code=${authCode}&redirect_uri=${REDIRECT_URI}&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}`);
     const accessToken = await fetch(
-      `https://www.linkedin.com/oauth/v2/accessToken/?grant_type=authorization_code&code=${authCode}&redirect_uri=${REDIRECT_URI}&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}`, 
-      {method: 'POST'});
-    console.log(accessToken);
-    res.locals.accessToken = accessToken.access_token;
+      `https://www.linkedin.com/oauth/v2/accessToken?grant_type=authorization_code&code=${authCode}&client_id=${CLIENT_ID}&client_secret=${CLIENT_SECRET}&redirect_uri=${REDIRECT_URI}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        }
+      });
+    const response = await accessToken.json();
+    console.log('Response: ', response);
+    res.locals.accessToken = response.access_token;
+    res.cookie('linkedInAccessToken', response.access_token);
     return next();
-  }
+  } 
   catch(err) {
     console.log(err);
     return next(err);
@@ -32,13 +35,14 @@ oauthController.callMeAPI = async (req, res, next) => {
     const result = await fetch(
       'https://api.linkedin.com/v2/me', {
         headers: {
-          Authorization: 'Bearer' + res.locals.accessToken
+          Authorization: 'Bearer ' + res.locals.accessToken
         }
       }
     );
-    res.locals.name = result.localizedFirstName + ' ' + result.localizedLastName;
+    const parsedResult = await result.json();
+    res.locals.name = parsedResult.localizedFirstName + ' ' + parsedResult.localizedLastName;
     console.log('me API call result');
-    console.log(result);
+    console.log(parsedResult);
     return next();
   }
   catch(err) {
@@ -49,15 +53,16 @@ oauthController.callMeAPI = async (req, res, next) => {
 oauthController.callEmailAPI = async (req, res, next) => {
   try {
     const result = await fetch(
-      'GET https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))', {
+      'https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))', {
         headers: {
-          Authorization: 'Bearer' + res.locals.accessToken
+          Authorization: 'Bearer ' + res.locals.accessToken
         }
       }
     );
-    console.log('email API call result');
-    console.log(result);
-    res.locals.email = result.elements[0]['handle~'].emailAddress;
+    const parsedResult = await result.json();
+    // console.log('email API call result');
+    // console.log(parsedResult.elements[0]['handle~']);
+    res.locals.email = parsedResult.elements[0]['handle~'].emailAddress;
     return next();
   }
   catch(err) {

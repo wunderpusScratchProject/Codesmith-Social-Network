@@ -104,13 +104,10 @@ userControllers.createUser = async (req, res, next) => {
   try {
     const {
       name,
-      photo,
-      cohort,
-      organization,
-      linkedin
-    } = res.locals.newUser;
-    const values = [name, photo, cohort, organization, linkedin];
-    const text = 'INSERT INTO residents (name, photo, cohort, organization, linkedin) VALUES($1, $2, $3, $4, $5)';
+      email,
+    } = res.locals;
+    const values = [name, '', '', '', '', '', email];
+    const text = 'INSERT INTO residents (name, photo, cohort, organization, linkedin, message, email) VALUES($1, $2, $3, $4, $5, $6, $7)';
     const userCreated = await db.query(text, values);
     
     res.locals.userCreated = userCreated;

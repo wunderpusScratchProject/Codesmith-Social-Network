@@ -2,6 +2,8 @@ import React, { Component, useState } from 'react';
 export const SetCohort = (props) => {
   const [cohortValue, changeCohort] = useState('FTRI');
   const [numberValue, changeNumber] = useState(1);
+  const [orgValue, changeOrg] = useState();
+  const [linkedinUrl, changeUrl] = useState();
   const cohortNums = [];
   
   //Set Cohort and make a PATCH/PUT request to change user's cohort
@@ -20,7 +22,7 @@ export const SetCohort = (props) => {
   return (
     <div className="SetCohort">
       <img id='codesmithImg' src="https://miro.medium.com/max/1200/1*aqCqaO8ALzYczUHe_3g3Gw.jpeg" alt="Codesmith Logo"></img>
-      <div className="SetCohortText"><span className='bigger'>Welcome!</span> <br /> <hr/>It seems you're new here. <br /> Please let us know which cohort you were in or <br />are currently a part of.</div>
+      <div className="SetCohortText"><span className='bigger'>Welcome!</span> <br /> <hr/>It seems you're new here. <br /> Please let us know just a <br />little bit more info about you.</div>
       <div className="SetCohortInput">
         {/* <input type="text" value={inputValue} onChange={(e) => changeInput(e.target.value)}></input> */}
 
