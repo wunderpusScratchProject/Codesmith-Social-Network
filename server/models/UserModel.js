@@ -6,13 +6,13 @@ const PG_URI = 'link';
 //Object with connectionString to our postgresURL
 const pool = new Pool({
   connectionString: PG_URI
-})
+});
 
 //Export object with query method
 module.exports = {
   query: (text, params, callback) => {
     console.log('Query: ', text);
-    return pool.query(text, params, callback)
+    return pool.query(text, params, callback);
   }
 }
 
