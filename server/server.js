@@ -10,6 +10,7 @@ const residentRouter = require('./routes/resident');
 const organizationRouter = require('./routes/organization');
 const cohortRouter = require('./routes/cohort');
 const oauthRouter = require('./routes/oauthRouter');
+const verifyRouter = require('./routes/verifyRouter');
 
 // const server = https.createServer({ key, cert }, app);
 
@@ -26,6 +27,7 @@ app.use('/cohort', cohortRouter);
 
 app.use('/login', oauthRouter);
 
+app.use('/verifyuser', verifyRouter);
 
 // Once we have React router working, this will keep the page from breaking if you're not on the homepage.
 app.get('/*', (req, res) => {

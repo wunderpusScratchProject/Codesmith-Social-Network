@@ -1,7 +1,5 @@
 const { Pool } = require('pg');
-
-//Postgres URL to link to
-const PG_URI = 'link';
+const { PG_URI } = require('../secrets');
 
 //Object with connectionString to our postgresURL
 const pool = new Pool({
