@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { route } = require('../server');
-const { exchangeCode } = require('../controllers/oauthController');
+const { exchangeCode, userComplete} = require('../controllers/oauthController');
 
 const router = Router();
 
@@ -15,7 +15,7 @@ router.get('/',
   }
 );
 
-router.get('/complete', (req, res) => {
+router.get('/complete', userComplete, (req, res) => {
   return res.status(200).json(res.locals.complete);
 }
 );

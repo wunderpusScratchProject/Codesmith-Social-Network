@@ -1,7 +1,8 @@
 const { CLIENT_SECRET } = require('../secrets.js');
 const db = require('../models/UserModel');
 
-const fetch = require('node-fetch')
+const fetch = require('node-fetch');
+const { createProxy } = require('http-proxy');
 const CLIENT_ID = '78jexcndblghpj';
 const REDIRECT_URI = 'http%3A%2F%2Flocalhost%3A8080%2Flogin';
 
@@ -73,9 +74,13 @@ oauthController.callEmailAPI = async (req, res, next) => {
 };
 
 oauthController.userComplete = async (req, res, next) => {
-  const text = `SELECT cohort FROM residents WHERE id=${req.cookies.userId} AND cohort IS NOT NULL`;
+  const text = `SELECT cohort FROM residents WHERE id=${req.cookies.userId} AND cohort=''`;
   try {
-    const complete = db.query(text);
+    let complete = await db.query(text);
+
+    console.log('Complete rows ',complete.rows);
+    if (complete.rows.length === 0) complete = true;
+    else complete = false;
     res.locals.complete = complete;
     return next();
   } catch (err) {

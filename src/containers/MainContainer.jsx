@@ -6,7 +6,7 @@ import { SetCohort } from '../components/SetCohort.jsx';
 export default function MainContainer() {
   const [isAuthenticated, changeAuthenticated] = useState(false);
   const [cohortIsSet, setCohort] = useState(false);
-  const [isComplete, changeComplete] = useState(false);
+  // const [isComplete, changeComplete] = useState(false);
 
   const getCookie = (cookie) => {
     return document.cookie
@@ -38,9 +38,10 @@ export default function MainContainer() {
     }
     if (getCookie('userId')) {
       fetch('http://localhost:8080/verifyuser/complete')
+        .then(res => res.json())
         .then(res => {
           console.log(res);
-          if (res) changeComplete(true);
+          if (res) setCohort(true);
         });
     }
   });
@@ -50,11 +51,9 @@ export default function MainContainer() {
       {
         isAuthenticated
           ? cohortIsSet
-            ? isComplete
-              ? <HomeContainer />
-              : <SetCohort setCohort={setCohort} />
-            : <LandingPage changeComplete={changeComplete} />
-          : <LandingPage changeComplete={changeComplete} />
+            ? <HomeContainer />
+            : <SetCohort setCohort={setCohort} />
+          : <LandingPage changeAuthenticated={changeAuthenticated} />
         //   ? <HomeContainer changeAuthenticated={changeAuthenticated}/>
         //   : <SetCohort setCohort={setCohort}/>
         // : <LandingPage changeAuthenticated={changeAuthenticated} />
