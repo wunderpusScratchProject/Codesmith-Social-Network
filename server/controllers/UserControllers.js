@@ -12,7 +12,7 @@ userControllers.loadUsers = async (req, res, next) => {
     res.locals.usersLoad = usersLoad.rows;
     return next();
   } catch (error) {
-    return next({ log: `userControllers.loadUsers error: ${error}`, message: 'Erorr found @ userControllers.loadUsers' });
+    return next({ log: `userControllers.loadUsers error: ${error}`, message: 'Error found @ userControllers.loadUsers' });
   }
 };
 
@@ -24,7 +24,7 @@ userControllers.loadOrgs = async (req, res, next) => {
     res.locals.orgsLoad = orgsLoad.rows;
     return next();
   } catch (error) {
-    return next({ log: `userControllers.loadOrgs error: ${error}`, message: 'Erorr found @ userControllers.loadOrgs' });
+    return next({ log: `userControllers.loadOrgs error: ${error}`, message: 'Error found @ userControllers.loadOrgs' });
   }
 };
 
@@ -59,7 +59,11 @@ userControllers.loadUserProfile = async (req, res, next) => {
 //If req.query.query exists, we are trying to find a specific user
 //Otherwise return all users in table
 userControllers.findUserByName = async (req, res, next) => {
-  const text = `SELECT * FROM residents WHERE LOWER(name) LIKE LOWER('${req.body.name}%') ORDER BY name`;
+  const text = `SELECT * FROM residents 
+    WHERE LOWER(name) LIKE LOWER('%${req.body.name}%') 
+    or LOWER(cohort) LIKE LOWER('%${req.body.name}%')
+    or LOWER(organization) LIKE LOWER('%${req.body.name}%')
+    ORDER BY name`;
   try {
     const userFound = await db.query(text);
     res.locals.userFound = userFound.rows;
