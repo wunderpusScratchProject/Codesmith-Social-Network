@@ -1,11 +1,19 @@
 const path = require('path');
+const fs = require('fs');
 const express = require('express');
 const cors = require('cors');
+// const https = require('https');
 const app = express();
 const PORT = 3000;
 const residentRouter = require('./routes/resident');
 const organizationRouter = require('./routes/organization');
 const cohortRouter = require('./routes/cohort');
+const oauthRouter = require('./routes/oauthRouter');
+
+const key = fs.readFileSync(path.join(__dirname, '../cert/CA/localhost/localhost.decrypted.key'));
+const cert = fs.readFileSync(path.join(__dirname,'../cert/CA/localhost/localhost.crt'));
+
+// const server = https.createServer({ key, cert }, app);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -16,6 +24,8 @@ app.use('/residents', residentRouter);
 app.use('/organizations', organizationRouter);
 
 app.use('/cohort', cohortRouter);
+
+app.use('/login', oauthRouter);
 
 
 // Once we have React router working, this will keep the page from breaking if you're not on the homepage.
