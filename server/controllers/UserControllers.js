@@ -143,15 +143,33 @@ userControllers.updateUser = async (req, res, next) => {
       photo,
       cohort,
       organization,
-      linkedin
+      linkedin, 
+      email
     } = res.locals.newUser;
     const values = [name, photo, cohort, organization, linkedin];
-    const text = `UPDATE residents SET name=${name}, photo=${photo}, cohort=${cohort}, organization=${organization}, linkedin=${linkedin} WHERE id=${req.body.id}`;
+    const text = `UPDATE residents SET name=${name}, photo=${photo}, cohort=${cohort}, organization=${organization}, linkedin=${linkedin}, email=${email} WHERE id=${req.body.id}`;
     const updatedUser = await db.query(text, values);
     res.locals.updatedUser = updatedUser;
     return next();
   } catch (err) {
     return next({ log: `userControllers.createUser error: ${err}`, message: 'Erorr found @ userControllers.createUser' });
+  }
+};
+// Register new user
+userControllers.registerUser = async (req, res, next) => {
+  try {
+    const {
+      id,
+      cohort,
+      organization,
+      linkedin
+    } = req.body;
+    const text = `UPDATE residents SET cohort='${cohort}', organization='${organization}', linkedin='${linkedin}' WHERE id='${id}'`;
+    const registeredUser = await db.query(text);
+    res.locals.registeredUser = registeredUser;
+    return next();
+  } catch (err) {
+    return next({ log: `userControllers.registerUser error: ${err}`, message: 'Erorr found @ userControllers.registerUser' });
   }
 };
 
