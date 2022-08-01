@@ -1,0 +1,19 @@
+name: Codesmith Social Network Secrets
+
+on: pull
+
+jobs:
+  jobs1:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Use PG_URI_SECRET in code
+      run: |
+        echo ${{ secrets.PG_URI_SECRET }}
+      env: 
+        PG_URI_SECURE: ${{ secrets.PG_URI_SECRET }}
+        
+    - name: Use LINKEDIN_CLIENT_SECRET
+      run: |
+      env: 
+        LINKEDIN_SECURE: ${{ secrets.LINKEDIN_CLIENT_SECRET }}
