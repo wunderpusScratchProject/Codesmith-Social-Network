@@ -1,3 +1,4 @@
+const fetch = require('node-fetch');
 const { CLIENT_SECRET } = require('../secrets.js');
 
 const CLIENT_ID = '78jexcndblghpj';
