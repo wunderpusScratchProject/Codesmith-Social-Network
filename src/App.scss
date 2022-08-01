@@ -3,7 +3,7 @@ body {
 }
 
 #codesmithImg {
-  width: 30vw;
+  width: 27vw;
   height: auto;
   position: absolute;
   top: 0px;
@@ -98,26 +98,55 @@ body {
   .SetCohortText {
     text-align: center;
     font-family: Verdana, Tahoma, sans-serif;
-    font-size: 35px;
+    font-size: 25px;
+    color: whitesmoke;
+    width: 70vw;
+  }
+
+  .lineTitle {
+    font-family: Verdana, Tahoma, sans-serif;
+    font-size: 20px;
     color: whitesmoke;
   }
 
   #cohortSelect {
-    padding: 10px;
-    width: 17vw;
-    height: 5vh;
-    margin-bottom: 4vh;
-    margin-right: 30px;
-    border-radius: 8px;
-  }
-
-  #cohortNumberSelect {
-    padding: 10px;
+    padding: 6px;
     width: 8vw;
     height: 5vh;
     margin-bottom: 4vh;
     margin-right: 30px;
     border-radius: 8px;
+    font-size: 15px !important;
+  }
+
+  #orgSelect {
+    padding: 10px;
+    width: 16vw;
+    height: 5vh;
+    margin-bottom: 4vh;
+    margin-right: 30px;
+    border-radius: 8px;
+    font-size: 15px !important;
+  }
+
+  #linkedSelect {
+    padding: 10px;
+    width: 13.2vw;
+    height: 5vh;
+    margin-bottom: 4vh;
+    margin-right: 30px;
+    border-radius: 8px;
+    font-size: 15px !important;
+  }
+
+  #cohortNumberSelect {
+    padding: 10px;
+    width: 6vw;
+    height: 5vh;
+    margin-bottom: 4vh;
+    margin-right: 30px;
+    border-radius: 8px;
+    font-size: 15px !important;
   }
 
   .SetCohortInput {
@@ -125,6 +154,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
 
     gap: 1vw;
 
