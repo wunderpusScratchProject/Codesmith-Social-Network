@@ -71,6 +71,7 @@ userControllers.findUserByName = async (req, res, next) => {
 
 //Controller to find user by Id
 userControllers.findUserById = async (req, res, next) => {
+  console.log(req.body);
   const text = `SELECT * FROM residents WHERE id=${req.body.id}`;
   try {
     const userFound = await db.query(text);

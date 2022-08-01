@@ -12,7 +12,7 @@ export const UserContainer = (props) => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        id: props.userId
+        id: document.cookie.split('; userId=')[1]
       })
     })
       .then(res => res.json())

@@ -12,13 +12,13 @@ export const SetCohort = (props) => {
     fetch('http://localhost:8080/residents/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: 1, cohort: `${cohortValue} ${numberValue}`, organization: orgValue, linkedin: linkedinUrl }),
+      body: JSON.stringify({ id: document.cookie.split('; userId=')[1], cohort: `${cohortValue} ${numberValue}`, organization: orgValue, linkedin: linkedinUrl }),
     })
       .then(data => data.json())
       .then(result => {
-        console.log(result)
+        console.log(result);
         props.setCohort(true);
-      }, [])
+      }, []);
     //Change cohortIsSet to true if successful
   }
 
