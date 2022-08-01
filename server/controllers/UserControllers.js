@@ -1,4 +1,5 @@
 const db = require('../models/UserModel');
+const { PG_URI } = require('../secrets');
 
 const userControllers = {};
 

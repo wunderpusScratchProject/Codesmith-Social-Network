@@ -23,13 +23,14 @@ export default function MainContainer() {
     //Check if cohortIsSet when isAuthenticated is changed to true
     //Fetching to the server, whether user is Authenticated and cohortisset
     
-    
-    if (getCookie('userID') & getCookie('linkedInAccessToken')) {
+    if (getCookie('userId') && getCookie('linkedInAuthCode')) {
       fetch('http://localhost:8080/verifyuser')
         .then(res => {
           console.log(res);
           if (res) changeAuthenticated(true);
         });
+    } else {
+      changeAuthenticated(false);
     }
 
   });
