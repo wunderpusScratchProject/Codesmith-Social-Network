@@ -239,21 +239,13 @@ body {
   }
 }
 
+
 .ResidentsPage {
   display: flex;
   flex-direction: column;
-  
-
-  .CohortBlock {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 60px;
-
-
-    .CohortSortResident {
-      font-size: 40px;
-      text-align: left;
-    }
+  text-align: left;
+  font-size: 2.5em;
+  font-family: Verdana, Tahoma, sans-serif;
   
     .ResidentsByCohort {
       display: grid;
@@ -262,19 +254,190 @@ body {
       justify-items: center;
 
       .ResidentBox {
-        height: 14vw;
-        width: 14vw;
+        height: 13vw;
+        width: 13vw;
+        min-height: 240px;
+        min-width: 240px;
     
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        
+
+        border-style: none;
+        border-radius: 10px;
 
         color: rgb(48, 48, 48);
         background-color: rgb(230, 230, 230);
         box-shadow: 0px 10px 10px rgb(170, 175, 185);
-        border-radius: 10px;
+      }
+      .ResidentBox:hover {
+        background-color: rgb(243, 243, 243);
+        transition: 0.3s;
+      }
+      .ResidentBox:action {
+        background-color: rgb(230, 230, 230);
       }
     }
-  }
+}
+
+.ProfilePicture {
+  width:  8vw;
+  height: 8vw;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid #203045;
+}
+
+.EmptyPhoto {
+  width: 8vw;
+  height: 8vw;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid #203045;
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
+  background-color: #00314a;
+  color: whitesmoke;
+  font-weight: 600;
+}
+
+.cardInfo {
+  font-size: 1.2rem;
+  font-family: Verdana, Tahoma, sans-serif;
+  font-weight: 600;
+  color: #013b59;
+  letter-spacing: .07em;
+  margin-top: 10px;
+  margin-bottom: 6px;
+}
+
+.userInfo {
+  font-size: .9rem;
+  color: #454751;
+  font-family: Verdana, Tahoma, sans-serif;
+}
+
+.message {
+  color: rgb(31, 31, 31);
+  font-family: Verdana, Tahoma, sans-serif;
+}
+
+.cohortTitle {
+  font-family: Verdana, Tahoma, sans-serif;
+  font-size: 3em;
+  margin-top: 20px;
+  font-weight: 500;
+  letter-spacing: .02em;
+  text-align: center;
+  width: 60vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cohortButton {
+  height: 8vw;
+  width: 8vw;
+  min-height: 100px;
+  min-width: 100px;
+
+  display: grid;
+
+  justify-content: center;
+  align-items: center;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 40px;
+  
+  border-style: none;
+  border-radius: 10px;
+
+  font-family: Verdana, Tahoma, sans-serif;
+  font-size: 1.4em;
+  color: rgb(48, 48, 48);
+  background-color: rgb(230, 230, 230);
+  box-shadow: 0px 10px 10px rgb(170, 175, 185);
+}
+.cohortButton:hover {
+  color: white;
+  background-color: #034f75;
+  border: #034f75;
+  transition: 0.3s;
+}
+.cohortButton:action {
+  color: white;
+  background-color: #213045;
+}
+
+.CohortPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+    .Cohortbox {
+      display: flex;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 50px;
+      justify-items: center;
+      margin-top: 80px;
+
+      .cohortButton {
+        height: 10vw;
+        width: 10vw;
+        min-height: 150px;
+        min-width: 150px;
+    
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        
+
+        border-style: none;
+        border-radius: 10px;
+
+        font-size: 25px;
+        font-weight: 500;
+        color: rgb(48, 48, 48);
+        background-color: rgb(230, 230, 230);
+        box-shadow: 0px 10px 10px rgb(170, 175, 185);
+      }
+      .cohortButton:hover {
+        color: white;
+        background-color: #034f75;
+        border: #034f75;
+        transition: 0.3s;
+      }
+      .cohortButton:action {
+        color: white;
+        background-color: #213045;
+      }
+    }
+}
+
+.BackButton {
+  width: 7vw;
+  height: 60px;
+  border: 1px solid #034f75;
+  border-radius: 20px;
+  background-color: #034f75;
+  color: whitesmoke;
+  font-family: Verdana, Tahoma, sans-serif;
+  z-index: 1000;
+  font-size: 1.5rem;
+  margin-top: 20px;
+}
+.BackButton:hover {
+  color: white;
+  background-color: rgb(6, 109, 161);
+  border: rgb(6, 109, 161);
+  transition: 0.3s;
+}
+.BackButton:action {
+  color: white;
+  background-color: #213045;
 }

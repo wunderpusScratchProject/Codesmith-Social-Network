@@ -11,7 +11,7 @@ export const NavBar = (props) => {
     <div className="NavBar">
       <div className="NavItems">
         <button className="HomeButton" onClick={() => clickFunction('Home')}>Home</button>
-        <SearchBar setActive={props.setActive}/>
+        <SearchBar setActive={props.setActive} searchValue={props.searchValue} setSearchValue={props.setSearchValue} />
       </div>
       <div className="NavItems">
         <button className="OrgButton" onClick={() => clickFunction('Residents')}>Residents</button>

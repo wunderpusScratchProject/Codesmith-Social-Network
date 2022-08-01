@@ -9,7 +9,7 @@ import { UserContainer } from './UserContainer.jsx';
 
 export const HomeContainer = (props) => {
   const [active, setActive] = useState('Home');
-  const [residentList, setResidentList] = useState([]);
+  const [searchValue, setSearchValue] = useState('');
   let elem;
 
   if (active === 'Home') {
@@ -19,7 +19,7 @@ export const HomeContainer = (props) => {
   } else if (active === 'Cohort') {
     elem = <div className="DisplayBox"><CohortContainer /></div>;
   } else if (active === 'Search') {
-    elem = <div className="DisplayBox"><SearchContainer /></div>;
+    elem = <div className="DisplayBox"><SearchContainer searchValue={searchValue} /></div>;
   } else if (active === 'Residents') {
     elem = <div className="DisplayBox"><ResidentsContainer /></div>;
   } else if (active === 'User') {
@@ -28,7 +28,7 @@ export const HomeContainer = (props) => {
 
   return (
     <div className="HomeContainerPage">
-      <NavBar active={active} setActive={setActive}/>
+      <NavBar active={active} searchValue={searchValue} setSearchValue={setSearchValue} setActive={setActive}/>
       {elem}
     </div>
   );

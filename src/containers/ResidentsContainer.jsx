@@ -1,32 +1,16 @@
-import React, { Component } from 'react';
-import { ResidentBox } from '../components/ResidentBox';
+import React, { Component, useEffect, useState } from 'react';
+import { ResidentsListContainer } from './ResidentsListContainer';
 
 export const ResidentsContainer = (props) => {
+  const [residentList, setResidentList] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:8080/residents')
+      .then(res => res.json())
+      .then(res => setResidentList(res));
+  }, []);
 
   return (
-    <div className="ResidentsPage">
-      <div className="CohortBlock">
-        <div className="CohortSortResident">FTRI 10</div>
-        <hr/>
-        <div className ="ResidentsByCohort">
-          <ResidentBox />
-          <ResidentBox />
-          <ResidentBox />
-          <ResidentBox />
-          <ResidentBox />
-        </div>
-      </div>
-
-      <div className="CohortBlock">
-        <div className="CohortSortResident">FTRI 9</div>
-        <hr/>
-        <div className ="ResidentsByCohort">
-          <ResidentBox />
-          <ResidentBox />
-          <ResidentBox />
-          <ResidentBox />
-        </div>
-      </div>
-    </div>
+    <ResidentsListContainer residentList={residentList} />
   );
 };
