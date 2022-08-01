@@ -12,9 +12,6 @@ const cohortRouter = require('./routes/cohort');
 const oauthRouter = require('./routes/oauthRouter');
 const verifyRouter = require('./routes/verifyRouter');
 
-const key = fs.readFileSync(path.join(__dirname, '../cert/CA/localhost/localhost.decrypted.key'));
-const cert = fs.readFileSync(path.join(__dirname,'../cert/CA/localhost/localhost.crt'));
-
 // const server = https.createServer({ key, cert }, app);
 
 app.use(express.json());
