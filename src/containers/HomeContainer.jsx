@@ -10,6 +10,7 @@ import { UserContainer } from './UserContainer.jsx';
 export const HomeContainer = (props) => {
   const [active, setActive] = useState('Home');
   const [searchValue, setSearchValue] = useState('');
+  const [userId, setUserId] = useState(1);
   let elem;
 
   if (active === 'Home') {
@@ -23,7 +24,7 @@ export const HomeContainer = (props) => {
   } else if (active === 'Residents') {
     elem = <div className="DisplayBox"><ResidentsContainer /></div>;
   } else if (active === 'User') {
-    elem = <div className="DisplayBox"><UserContainer /></div>;
+    elem = <div className="DisplayBox"><UserContainer userId={userId}/></div>;
   }
 
   return (

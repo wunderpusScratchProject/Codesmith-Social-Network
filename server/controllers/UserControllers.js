@@ -68,6 +68,18 @@ userControllers.findUserByName = async (req, res, next) => {
   }
 };
 
+//Controller to find user by Id
+userControllers.findUserById = async (req, res, next) => {
+  const text = `SELECT * FROM residents WHERE id=${req.body.id}`;
+  try {
+    const userFound = await db.query(text);
+    res.locals.userFound = userFound.rows[0];
+    return next();
+  } catch (error) {
+    return next({ log: `userControllers.findUser error: ${error}`, message: 'Erorr found @ userControllers.findUser' });
+  }
+};
+
 //Controller to find users that work at a specific organization
 
 userControllers.findUserByOrganization = async (req, res, next) => {
@@ -108,7 +120,11 @@ userControllers.createUser = async (req, res, next) => {
     } = res.locals;
     const values = [name, '', '', '', '', '', email];
     const text = 'INSERT INTO residents (name, photo, cohort, organization, linkedin, message, email) VALUES($1, $2, $3, $4, $5, $6, $7)';
-    const userCreated = await db.query(text, values);
+    await db.query(text, values);
+    const userCreated = await db.query('SELECT id FROM residents ORDER BY id DESC LIMIT 1');
+    console.log(userCreated.rows[0].id);
+
+    res.cookie('userId', userCreated.rows[0].id);
     
     res.locals.userCreated = userCreated;
     return next();
