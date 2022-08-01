@@ -6,6 +6,7 @@ import { ResidentDetails } from '../components/ResidentDetails.jsx';
 export const UserContainer = (props) => {
   const [user, setUser] = useState({});
   const [userIcon, setUserIcon] = useState({});
+  const [saved, changeSaved] = useState(false);
 
   useEffect(() => {
     fetch('http://localhost:8080/residents/id', {
@@ -21,7 +22,28 @@ export const UserContainer = (props) => {
         return res;
       })
       .then(res => setUserIcon({ name: res.name, photo: res.photo }));
-  },[]);
+  },[saved]);
+
+  useEffect(() => {
+    if (saved) {
+      fetch('http://localhost:8080/residents/id', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: document.cookie.split('; userId=')[1]
+        })
+      })
+        .then(res => res.json())
+        .then(res => {
+          setUser(res);
+          return res;
+        })
+        .then(res => setUserIcon({ name: res.name, photo: res.photo }))
+        .then(changeSaved(false));
+    }
+
+
+  }, [saved]);
 
   function changeInput(e, key) {
     console.log(key);
@@ -34,6 +56,15 @@ export const UserContainer = (props) => {
 
   function saveFunction() {
     console.log(user);
+    fetch('http://localhost:8080/residents/update', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id: document.cookie.split('; userId=')[1],
+        user: user,
+      })
+    })
+      .then(changeSaved(true));
   }
 
   console.log(user);

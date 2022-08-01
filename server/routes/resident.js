@@ -20,4 +20,8 @@ router.post('/id', userControllers.findUserById, (req, res) => {
   return res.status(200).json(res.locals.userFound);
 });
 
+router.post('/update', userControllers.updateUser, (req, res) => {
+  return res.status(200);
+});
+
 module.exports = router;
