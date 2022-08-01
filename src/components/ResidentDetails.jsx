@@ -30,7 +30,12 @@ export const ResidentDetails = (props) => {
     <div className="ResidentDetails">
       {elems}
       <button className="SaveButton" onClick={props.saveFunction}>Save</button>
-      <button className="LogOutButton" onClick={() => 'userId'}>Log out</button>
+      <button className="LogOutButton" onClick={() => {
+        document.cookie = 'userId=0; path=/; max-age=0;';
+        document.cookie = 'linkedInAuthCode=0; path=/; max-age=0;';
+        props.changeAuthenticated(false);
+      }
+      }>Log out</button>
     </div>
   );
 };

@@ -42,7 +42,7 @@ export const UserContainer = (props) => {
       <div className="ResidentsProfile">
         <ResidentBox photo={userIcon.photo} name={userIcon.name}/>
       </div>
-      <ResidentDetails user={user} saveFunction={saveFunction} changeInput={changeInput}/>
+      <ResidentDetails user={user} changeAuthenticated={props.changeAuthenticated} saveFunction={saveFunction} changeInput={changeInput}/>
     </div>
   );
 };

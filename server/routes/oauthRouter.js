@@ -11,9 +11,7 @@ router.get('/',
   exchangeCode, 
   callMeAPI,
   callEmailAPI, 
-  /* create user middleware */ 
   createUser,
-  // setAuthCodeCookie,
   (req, res) => {
     return res.redirect('http://localhost:8080/');
   });
