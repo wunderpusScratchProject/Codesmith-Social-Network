@@ -37,6 +37,18 @@ module.exports = {
         target: 'http://localhost:3000/',
         secure: false,
       },
+      '/login/**': {
+        target: 'http://localhost:3000/',
+        secure: false,
+      },
+      '/login': {
+        target: 'http://localhost:3000/',
+        secure: false,
+      },
+      '/verifyuser': {
+        target: 'http://localhost:3000/',
+        secure: false,
+      },
     },
   },
   plugins: [
