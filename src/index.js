@@ -13,6 +13,7 @@ import { CohortContainer } from './containers/CohortContainer.jsx';
 import { UserContainer } from './containers/UserContainer.jsx';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import { NavBar } from './containers/NavBarContainer.jsx';
+import { SearchContainer } from './containers/SearchContainer.jsx';
 // uncomment so that webpack can bundle styles
 import styles from './App.scss';
 
@@ -37,6 +38,7 @@ ReactDOM.render(
         <Route path="/organization" element={<OrganizationContainer />} />
         <Route path="/cohort" element={<CohortContainer />} />
         <Route path="/user" element={<UserContainer />} />
+        <Route path="/search" elemtn = {<SearchContainer/>}/>
       </Routes>
     </HashRouter>
   </StoreProvider>,
