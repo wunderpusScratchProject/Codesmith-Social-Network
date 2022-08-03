@@ -1,4 +1,5 @@
 import React, { Component, useEffect, useState } from 'react';
+import { NavBar } from './NavBarContainer';
 import { ResidentsListContainer } from './ResidentsListContainer';
 
 export const CohortContainer = (props) => {
@@ -32,6 +33,7 @@ export const CohortContainer = (props) => {
 
   return (
     <div className="CohortPage">
+      <NavBar />
       <div className='cohortTitle'>Search by Cohort</div>
       {
         !active

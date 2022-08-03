@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-
+import { useStoreState, useStoreActions } from 'easy-peasy';
 const CLIENT_ID = '78jexcndblghpj';
 const REDIRECT_URI = 'http%3A%2F%2Flocalhost%3A8080%2Flogin';
 const SCOPE = 'r_liteprofile r_emailaddress';
 
-export const LandingPage = (props) => {
-
+export const LandingPage = () => {
+  const isAuthenticated = useStoreState((state) => state.isAuthenticated);
+  const changeAuthenticated = useStoreActions((actions) => actions.changeAuthenticated);
   //Redirect user to LinkedIn OAuth then if successful set authenticated to true
   async function logIn() {
     //OAUTH REQUEST BELOW
@@ -13,7 +14,7 @@ export const LandingPage = (props) => {
     //Store acces token in server
 
     //result.isInSystem === true => 
-    props.changeAuthenticated(true);
+    changeAuthenticated(true);
   }
 
   return (

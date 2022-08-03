@@ -3,7 +3,8 @@ const { PG_URI } = require('../secrets');
 
 //Object with connectionString to our postgresURL
 const pool = new Pool({
-  connectionString: PG_URI
+  connectionString: PG_URI,
+  max: 4,
 });
 
 //Export object with query method
@@ -11,12 +12,8 @@ module.exports = {
   query: (text, params, callback) => {
     console.log('Query: ', text);
     return pool.query(text, params, callback);
-  }
-}
-
-
-
-
+  },
+};
 
 // Residents table in database
 // residents (
@@ -27,18 +24,6 @@ module.exports = {
 //    organization varchar( 150 ),
 //    linkedin varchar( 150 ) NOT NULL
 // );
-
-
-
-
-
-
-
-
-
-
-
-
 
 // MAYBE
 // case 'species':

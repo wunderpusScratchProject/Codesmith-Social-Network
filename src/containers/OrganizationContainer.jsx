@@ -1,6 +1,6 @@
 import React, { Component, useEffect, useState } from 'react';
 import { ResidentsListContainer } from './ResidentsListContainer';
-
+import { NavBar } from './NavBarContainer.jsx';
 export const OrganizationContainer = (props) => {
   const [orgList, setOrgList] = useState([]);
   const [residents, setResList] = useState([]);
@@ -34,6 +34,7 @@ export const OrganizationContainer = (props) => {
   console.log(residents);
   return (
     <div className="CohortPage">
+      <NavBar/>
       <div className='cohortTitle'>Search by Organization</div> 
       {
         !active

@@ -1,13 +1,20 @@
 import React, { Component, useState, useEffect } from 'react';
+import { useStoreState, useStoreActions } from 'easy-peasy';
+import { Navigate } from 'react-router-dom';
 import { HomeContainer } from './HomeContainer.jsx';
 import { LandingPage } from '../components/LandingPage.jsx';
 import { SetCohort } from '../components/SetCohort.jsx';
 
 export default function MainContainer() {
-  const [isAuthenticated, changeAuthenticated] = useState(false);
-  const [cohortIsSet, setCohort] = useState(false);
+  //const [isAuthenticated, changeAuthenticated] = useState(false);
+  //const [cohortIsSet, setCohort] = useState(false);
   // const [isComplete, changeComplete] = useState(false);
-
+  //easy peasy state!!
+  const isAuthenticated = useStoreState((state) => state.isAuthenticated);
+  const changeAuthenticated = useStoreActions((actions) => actions.changeAuthenticated);
+  const isCohortSet = useStoreState((state)=> state.isCohortSet);
+  const setCohort = useStoreActions((actions)=> actions.setCohort);
+  //end of easy state
   const getCookie = (cookie) => {
     return document.cookie
       .split('; ')
@@ -50,10 +57,10 @@ export default function MainContainer() {
     <div className="MainContainer">
       {
         isAuthenticated
-          ? cohortIsSet
-            ? <HomeContainer changeAuthenticated={changeAuthenticated}/>
-            : <SetCohort setCohort={setCohort} />
-          : <LandingPage changeAuthenticated={changeAuthenticated} />
+          ? isCohortSet
+            ? /*<HomeContainer /> /*wanna change to*/ <Navigate to='/home'/>
+            : <SetCohort  />
+          : <LandingPage  />
         //   ? <HomeContainer changeAuthenticated={changeAuthenticated}/>
         //   : <SetCohort setCohort={setCohort}/>
         // : <LandingPage changeAuthenticated={changeAuthenticated} />

@@ -1,7 +1,12 @@
 import React, { Component, useState } from 'react';
-
+import { useStoreState, useStoreActions } from 'easy-peasy';
+import { Navigate } from 'react-router';
 export const ResidentDetails = (props) => {
-  
+  const isAuthenticated = useStoreState((state) => state.isAuthenticated);
+  const changeAuthenticated = useStoreActions(
+    (actions) => actions.changeAuthenticated
+  );
+  const [refresh, setRefresh] = useState(false);
   const elems = [];
   console.log(props.user);
   for (const key in props.user) {
@@ -25,7 +30,7 @@ export const ResidentDetails = (props) => {
       }
     }
   }
-
+  
   return (
     <div className="ResidentDetails">
       {elems}
@@ -33,9 +38,12 @@ export const ResidentDetails = (props) => {
       <button className="LogOutButton" onClick={() => {
         document.cookie = 'userId=0; path=/; max-age=0;';
         document.cookie = 'linkedInAuthCode=0; path=/; max-age=0;';
-        props.changeAuthenticated(false);
+        console.log('logged out')
+        changeAuthenticated(false);
+        setRefresh(true);
       }
       }>Log out</button>
+      {refresh? <Navigate to={'/'}/>: null}
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import React, { Component, useEffect, useState } from 'react';
+import { NavBar } from './NavBarContainer';
 import { ResidentsListContainer } from './ResidentsListContainer';
 
 export const ResidentsContainer = (props) => {
@@ -11,6 +12,9 @@ export const ResidentsContainer = (props) => {
   }, []);
 
   return (
-    <ResidentsListContainer residentList={residentList} />
+    <div>
+      <NavBar />
+      <ResidentsListContainer residentList={residentList} />
+    </div>
   );
 };
