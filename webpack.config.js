@@ -107,4 +107,10 @@ module.exports = {
       },
     ],
   },
+  
 };
+
+// Not sure of if testEnviornment is needed after downloading jest dome -test env
+// 'jest':{
+//   'testEnvironment': 'jsdom'
+// },

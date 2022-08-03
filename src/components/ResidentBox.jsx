@@ -17,4 +17,4 @@ export const ResidentBox = (props) => {
   );
 };
 
-
+export default ResidentBox;
