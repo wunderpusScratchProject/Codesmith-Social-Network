@@ -1,5 +1,7 @@
 const { CLIENT_SECRET } = require('../secrets.js');
 const db = require('../models/UserModel');
+const jwt = require('jsonwebtoken');
+
 
 const fetch = require('node-fetch');
 const { createProxy } = require('http-proxy');
@@ -59,7 +61,7 @@ oauthController.callMeAPI = async (req, res, next) => {
 
 oauthController.callEmailAPI = async (req, res, next) => {
   try {
-    console.log('callEmailAPI')
+    console.log('callEmailAPI');
     const result = await fetch(
       'https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))', {
         headers: {
@@ -95,7 +97,7 @@ oauthController.userComplete = async (req, res, next) => {
 // handle getting basic profile info
 // GET https://api.linkedin.com/v2/me?projection=(id,firstName,lastName,profilePicture(displayImage~:playableStreams))
 
-//res.locals.accessToken
+
 oauthController.callProfilePicAPI = async (req, res, next) => {
   try {
     const result = await fetch(
@@ -111,10 +113,39 @@ oauthController.callProfilePicAPI = async (req, res, next) => {
   } catch (err) {
     return next(err);
   }
-}
+};
 
+oauthController.JWTCreator = async (req, res, next) => {
+  try{
+    const secret = process.env.JWT_SECRET;
+    console.log(secret);
+    console.log('expiration test: ', typeof(parseInt(process.env.JWT_EXPIRES_IN)));
+    const token = jwt.sign({ email: res.locals.email }, secret);
+    console.log('Token Created!', token);
+    res.cookie('token', token, {
+      'Max-Age': parseInt(process.env.JWT_EXPIRES_IN),
+      // httpOnly: true,
+      secure: true
+    });
+    return next();
+  }
+  catch(err){
+    console.log(err);
+  }
+};
+
+oauthController.verifyToken = async(req, res, next) => {
+  try{
+    const token = req.cookies.token;
+    const secret = process.env.JWT_SECRET;
+    console.log('THIS IS TOKEN IN VERIFY TOKEN', token);
+    const decodedToken = await jwt.verify(token, secret);
+    console.log('THIS IS DECODED TOKEN: ', decodedToken);
+    return next();
+  }
+  catch(err){
+    console.log(err);
+  }
+};
 
 module.exports = oauthController;
-
-'AQTLzsQiF7FSapPDta6Clk7G6hMcE7qNzdWmsbCTCrVevGiGyCJer1eAEBc26kXriCPTSXRy5mXLWIbIB7EJi30b9HZPLWx2keoI2IoRNUPWbtT1kh7fpiha1m_N4xdxIhA1B5dMUlI7Y8HQd6fEWGpau6LABrqLTakmBZFL8M1nm5GoBmozA08jIMt7iAZhy33u85rWrMbfui2Ehng'
-'AQSwWynk77TSD7-hXhaWbUymspIOa8p7umlMDAzabhPmCK3eR-qSaKB11OmoFzPCXkRHjWcaKI_dfEbpZMuZoQk8WNwz1aXd-fkRDk0W6EWx_xBFPoBG4vF92mawjfonQ4DdIAOYS_kGpgCzYPjRlXQXEqBKBFj2NHBWYsPaGzpVVu02pMywRXmwSpN3JTOTKWONWfdnoPyowCSKzto'

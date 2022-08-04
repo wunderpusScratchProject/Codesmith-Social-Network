@@ -1,15 +1,15 @@
 const { Router } = require('express');
 const { route } = require('../server');
-const { exchangeCode, userComplete} = require('../controllers/oauthController');
+const { exchangeCode, userComplete, verifyToken} = require('../controllers/oauthController');
 
 const router = Router();
 
 router.get('/',
   (req, res, next) => {
     console.log(req.cookies);
-    return next()
+    return next();
   },
-  exchangeCode,
+  verifyToken,
   (req, res) => {
     res.status(200).send(true);
   }

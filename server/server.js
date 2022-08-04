@@ -11,6 +11,9 @@ const organizationRouter = require('./routes/organization');
 const cohortRouter = require('./routes/cohort');
 const oauthRouter = require('./routes/oauthRouter');
 const verifyRouter = require('./routes/verifyRouter');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 // const server = https.createServer({ key, cert }, app);
 
