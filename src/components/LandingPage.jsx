@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+//client provides redirect URI to 3rd party, so the first time the authentication is called, the third party will 
 const CLIENT_ID = '78jexcndblghpj';
 const REDIRECT_URI = 'http%3A%2F%2Flocalhost%3A8080%2Flogin';
 const SCOPE = 'r_liteprofile r_emailaddress';
@@ -16,6 +16,8 @@ export const LandingPage = (props) => {
     props.changeAuthenticated(true);
   }
 
+  // on Click, invoke .open method and redirects to oauth authorization route
+  // linkedin will send the authorization code to the uri within the redirect url, 
   return (
     <div className="LandingPage">
       <img id='codesmithImg' src="https://miro.medium.com/max/1200/1*aqCqaO8ALzYczUHe_3g3Gw.jpeg" alt="Codesmith Logo"></img>

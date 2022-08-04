@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { exchangeCode, callMeAPI, callEmailAPI, setAuthCodeCookie } = require('../controllers/oauthController');
+const { exchangeCode, callMeAPI, callEmailAPI, callProfilePicAPI, setAuthCodeCookie } = require('../controllers/oauthController');
 const { createUser, verifyUserExists } = require('../controllers/UserControllers');
 // TODO: (Nick) no idea if the below line is necessary. Test?
 // TODO: I don't know how to get to the homepage without React Router
@@ -10,7 +10,8 @@ const router = Router();
 router.get('/', 
   exchangeCode, 
   callMeAPI,
-  callEmailAPI, 
+  callEmailAPI,
+  callProfilePicAPI, 
   verifyUserExists,
   createUser,
   (req, res) => {
