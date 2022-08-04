@@ -2,8 +2,13 @@ import React, { Component, useEffect, useState } from 'react';
 import { ResidentsListContainer } from './ResidentsListContainer.jsx';
 import { ResidentBox } from '../components/ResidentBox.jsx';
 import { ResidentDetails } from '../components/ResidentDetails.jsx';
+import { NavBar } from './NavBarContainer.jsx';
+import { useStoreState, useStoreActions } from 'easy-peasy';
+
 
 export const UserContainer = (props) => {
+  const isAuthenticated = useStoreState((state) => state.isAuthenticated);
+  const changeAuthenticated = useStoreActions( (actions) => actions.changeAuthenticated);
   const [user, setUser] = useState({});
   const [userIcon, setUserIcon] = useState({});
   const [saved, changeSaved] = useState(false);
@@ -70,10 +75,11 @@ export const UserContainer = (props) => {
   console.log(user);
   return (
     <div className="UserContainer">
+      <NavBar/>
       <div className="ResidentsProfile">
         <ResidentBox photo={userIcon.photo} name={userIcon.name}/>
       </div>
-      <ResidentDetails user={user} changeAuthenticated={props.changeAuthenticated} saveFunction={saveFunction} changeInput={changeInput}/>
+      <ResidentDetails user={user} changeAuthenticated={changeAuthenticated} saveFunction={saveFunction} changeInput={changeInput}/>
     </div>
   );
 };
