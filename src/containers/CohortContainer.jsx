@@ -27,7 +27,7 @@ export const CohortContainer = (props) => {
   const cohorts = [];
 
   for (let i = 0; i < cohortList.length; i++) {
-    cohorts.push(<button className='cohortButton' onClick={() => findResidents(cohortList[i].cohort)}>{cohortList[i].cohort}</button>);
+    cohorts.push(<li className='cohortItem' onClick={() => findResidents(cohortList[i].cohort)}>{cohortList[i].cohort}</li>);
   }
 
   return (
