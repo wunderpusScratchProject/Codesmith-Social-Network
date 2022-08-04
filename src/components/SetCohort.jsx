@@ -1,11 +1,17 @@
 import React, { Component, useState } from 'react';
-export const SetCohort = (props) => {
+import { useStoreState, useStoreActions } from 'easy-peasy';
+import { useNavigate } from 'react-router-dom';
+export const SetCohort = () => {
   const [cohortValue, changeCohort] = useState('FTRI');
   const [numberValue, changeNumber] = useState(1);
   const [orgValue, changeOrg] = useState();
   const [linkedinUrl, changeUrl] = useState();
   const cohortNums = [];
-
+  // easy peasy
+  const isCohortSet = useStoreState((state) => state.isCohortSet);
+  const setCohort = useStoreActions((actions) => actions.setCohort);
+  //end of peasy
+  
   const getCookie = (cookie) => {
     return document.cookie
       .split('; ')
@@ -13,7 +19,7 @@ export const SetCohort = (props) => {
       ?.split('=')[1];
   };
 
-
+  if(isCohortSet) useNavigate('/home');
   //Set Cohort and make a PATCH/PUT request to change user's cohort
   function cohortSet() {
     //FETCH REQUEST BELOW
@@ -24,8 +30,9 @@ export const SetCohort = (props) => {
     })
       .then(data => data.json())
       .then(result => {
-        console.log(result);
-        props.setCohort(true);
+        console.log('result:',result);
+        setCohort(true);
+        console.log('setCohort',isCohortSet);
       }, []);
     //Change cohortIsSet to true if successful
   }

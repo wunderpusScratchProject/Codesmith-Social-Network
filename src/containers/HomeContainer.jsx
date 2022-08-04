@@ -1,4 +1,5 @@
 import React, { Component, useEffect, useState } from 'react';
+import { useStoreState, useStoreActions } from 'easy-peasy';
 import { NavBar } from './NavBarContainer.jsx';
 import { CohortContainer } from './CohortContainer.jsx';
 import { OrganizationContainer } from './OrganizationContainer.jsx';
@@ -7,10 +8,14 @@ import { HomePage } from '../components/HomePage.jsx';
 import { ResidentsContainer } from './ResidentsContainer.jsx';
 import { UserContainer } from './UserContainer.jsx';
 
-export const HomeContainer = (props) => {
+export const HomeContainer = () => {
   const [active, setActive] = useState('Home');
   const [searchValue, setSearchValue] = useState('');
   const [userId, setUserId] = useState(1);
+  const isAuthenticated = useStoreState((state) => state.isAuthenticated);
+  const changeAuthenticated = useStoreActions(
+    (actions) => actions.changeAuthenticated
+  );
   let elem;
 
   if (active === 'Home') {
@@ -24,7 +29,9 @@ export const HomeContainer = (props) => {
   } else if (active === 'Residents') {
     elem = <div className="DisplayBox"><ResidentsContainer /></div>;
   } else if (active === 'User') {
-    elem = <div className="DisplayBox"><UserContainer changeAuthenticated={props.changeAuthenticated} userId={userId}/></div>;
+    elem = <div className="DisplayBox"><UserContainer
+      changeAuthenticated={changeAuthenticated}
+      userId={userId} /></div>;
   }
 
   return (

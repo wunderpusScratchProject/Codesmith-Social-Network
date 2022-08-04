@@ -1,4 +1,5 @@
 import React, { Component, useEffect, useState } from 'react';
+import { NavBar } from './NavBarContainer';
 import { ResidentsListContainer } from './ResidentsListContainer';
 
 export const CohortContainer = (props) => {
@@ -10,7 +11,7 @@ export const CohortContainer = (props) => {
     fetch('http://localhost:8080/cohort')
       .then(res => res.json())
       .then(res => setCohortList(res));
-  }, [active]);
+  }, [active]); //dependency array was previously [Active]
 
   async function findResidents(cohort) {
     console.log(cohort);
@@ -27,11 +28,14 @@ export const CohortContainer = (props) => {
   const cohorts = [];
 
   for (let i = 0; i < cohortList.length; i++) {
-    cohorts.push(<button className='cohortButton' onClick={() => findResidents(cohortList[i].cohort)}>{cohortList[i].cohort}</button>);
+    cohorts.push(<button className='cohortButton'
+      onClick={() =>
+        findResidents(cohortList[i].cohort)}>{cohortList[i].cohort}</button>);
   }
 
   return (
     <div className="CohortPage">
+      <NavBar />
       <div className='cohortTitle'>Search by Cohort</div>
       {
         !active
