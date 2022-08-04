@@ -8,11 +8,11 @@ const pool = new Pool({
 
 //Export object with query method
 module.exports = {
-  query: (text, params, callback) => {
+  query: async (text, params, callback) => {
     console.log('Query: ', text);
     return pool.query(text, params, callback);
   }
-}
+};
 
 
 
