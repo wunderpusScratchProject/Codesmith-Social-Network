@@ -113,7 +113,6 @@ oauthController.callProfilePicAPI = async (req, res, next) => {
   }
 }
 
-console.log(len('alphabetagammadelta'))
 
 module.exports = oauthController;
 

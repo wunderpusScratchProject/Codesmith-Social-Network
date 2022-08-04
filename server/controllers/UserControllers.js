@@ -211,6 +211,7 @@ userControllers.deleteUser = async (req, res, next) => {
     const text = `DELETE FROM residents WHERE id=${req.body.id}`;
     const userDeleted = await db.query(text);
     res.locals.userDeleted = userDeleted;
+    res.cookie('userId', null); 
     
     return next();
   } catch (err) {
