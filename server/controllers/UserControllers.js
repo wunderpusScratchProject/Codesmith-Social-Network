@@ -1,6 +1,20 @@
 const db = require('../models/UserModel');
 const { PG_URI } = require('../secrets');
+const bcrypt = require('bcrypt');
 
+function hashID (userID) {
+  const saltRounds = 10;
+
+  return bcrypt.hashSync(userID, saltRounds);
+}
+
+/* const saltRounds = 10;
+const userID = ;
+
+bcrypt.hash(userID, saltRounds, (err, hash) => {
+  console.log('this is the hash: ', hash);
+});
+ */
 const userControllers = {};
 
 // Load list of all users when residents tab is clicked.
@@ -76,7 +90,7 @@ userControllers.findUserByName = async (req, res, next) => {
 //Controller to find user by Id
 userControllers.findUserById = async (req, res, next) => {
   console.log(req.body);
-  const text = `SELECT * FROM residents WHERE id=${req.body.id}`;
+  const text = `SELECT * FROM residents WHERE hashedId=${req.body.id}`;
   try {
     const userFound = await db.query(text);
     res.locals.userFound = userFound.rows[0];
@@ -149,13 +163,16 @@ userControllers.createUser = async (req, res, next) => {
       name,
       email,
     } = res.locals;
-    const values = [name, '', '', '', '', '', email];
-    const text = 'INSERT INTO residents (name, photo, cohort, organization, linkedin, message, email) VALUES($1, $2, $3, $4, $5, $6, $7)';
+    const hashedId = hashID(email);
+    const values = [name, '', '', '', '', '', email, hashedId];
+    const text = 'INSERT INTO residents (name, photo, cohort, organization, linkedin, message, email, hashedId) VALUES($1, $2, $3, $4, $5, $6, $7, $8)';
     await db.query(text, values);
     const userCreated = await db.query('SELECT id FROM residents ORDER BY id DESC LIMIT 1');
-    console.log(userCreated.rows[0].id);
+    // const hashed = hashID(userCreated.rows[0].id);
+    // const hashQuery = `UPDATE residents SET name='${name}', photo='', cohort='', organization='', linkedin='', email='', hashedId='${hashed}' WHERE id='${userCreated.rows[0].id}'`;
+    // await db.query('UPDATE residents SET hashedId=`$ hashed', hashed);
 
-    res.cookie('userId', userCreated.rows[0].id);
+    res.cookie('userId', hashedId); //updated to hashedId
     
     res.locals.userCreated = userCreated;
     return next();
@@ -210,7 +227,7 @@ userControllers.deleteUser = async (req, res, next) => {
     const text = `DELETE FROM residents WHERE id=${req.body.id}`;
     const userDeleted = await db.query(text);
     res.locals.userDeleted = userDeleted;
-    
+    res.cookie('linkedInAuthCode', null);
     return next();
   } catch (err) {
     return next({ log: `userControllers.deleteUser error: ${err}`, message: 'Erorr found @ userControllers.deleteUser' });

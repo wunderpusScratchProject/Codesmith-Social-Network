@@ -1,5 +1,52 @@
+/* 
+  CSS RESET
+  REMOVES INCONSISTENCIES BETWEEN BROWSERS
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
 body {
   color: rgb(145, 145, 145);
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
 }
 
 #codesmithImg {
@@ -194,82 +241,52 @@ body {
   color: #00314a;
 }
 
+.NavBar {
+  height: 4rem;
+  background-color: #1b1b1b;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px rgb(67, 67, 67) solid;;
+  border-top: 1px rgb(67, 67, 67) solid;;
+  margin-bottom: 1rem;
+  display: grid;
+  grid-template-columns: 2fr 7fr 1fr; 
+  grid-template-rows: auto; 
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  z-index: 1;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  opacity: 0.95;
+}
+
 .DisplayBox {
-  padding: 30px;
   text-align: center;
   color: #00314a;
-  margin-top: 5vh;
-}
-
-.NavBar {
-  width: 100%;
-  height: 60px;
-  top: 0;
-  position: fixed;
-  z-index: 1000;
-
+  margin-top: 4rem;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  align-content: center;
-  justify-content: space-between;
-
-  padding-top: 20px;
-  padding-bottom: 20px;
-  padding-left: 20px;
-  padding-right: 20px;
-
-  // background-color: #25355d;
-  background-color: #203045;
-  box-shadow: 0px 3px 1px #35373e;
-
-  .NavItems {
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
-    font-family: Verdana, Tahoma, sans-serif;
-    font-size: 16px;
-
-    .SearchBarButton {
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-
-      input {
-        border-style: none;
-        border-radius: 10px;
-        height: 30px;
-        padding: 10px;
-        width: 300px;
-      }
-
-    }
-
-    button {
-      // background-color: #25355d;
-      height: 60px;
-      width: max-content;
-      min-width: 80px;
-      background-color: #203045;
-      color: rgb(221, 221, 221);
-      border: none;
-      font-family: Verdana, Tahoma, sans-serif;
-      padding: 10px;
-    }
-    button:hover {
-      color: white;
-      background-color: #293d57;
-      transition: 0.3s;
-    }
-    button:action {
-      color: white;
-      background-color: #213045;
-    }
-  }
+  justify-content: center;
 }
 
+.orgItem {
+  font-size: 2em;
+  list-style: none;
+  background-color: #fff;  
+  text-align: center;  
+  transition: .6s;  
+  box-shadow: 0 5px 4px rgba(0,0,0,.5);
+  display: inline-block;
+  width: 500px;
+  height: 4rem;
+  text-align: center;
+  margin: 0.5rem;
+  padding: 0.25rem;
+}
+
+.orgItem:hover {
+  background-color: rgb(230, 230, 230); 
+  cursor: pointer;
+}
 
 .ResidentsPage {
   display: flex;
@@ -338,6 +355,7 @@ body {
     box-shadow: 0px 10px 10px rgb(170, 175, 185);
   }
 }
+
 
 .UserContainer {
   display: flex;
@@ -413,96 +431,32 @@ body {
 
 .cohortTitle {
   font-family: Verdana, Tahoma, sans-serif;
-  font-size: 3em;
+  font-size: 2em;
   margin-top: 20px;
   font-weight: 500;
   letter-spacing: .02em;
   text-align: center;
-  width: 60vw;
+  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.cohortButton {
-  height: 8vw;
-  width: 8vw;
-  min-height: 100px;
-  min-width: 100px;
-
-  display: grid;
-
-  justify-content: center;
-  align-items: center;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 40px;
-  
-  border-style: none;
-  border-radius: 10px;
-
-  font-family: Verdana, Tahoma, sans-serif;
-  font-size: 1.4em;
-  color: rgb(48, 48, 48);
-  background-color: rgb(230, 230, 230);
-  box-shadow: 0px 10px 10px rgb(170, 175, 185);
-}
-.cohortButton:hover {
-  color: white;
-  background-color: #034f75;
-  border: #034f75;
-  transition: 0.3s;
-}
-.cohortButton:action {
-  color: white;
-  background-color: #213045;
+.cohortItem {
+  font-size: 2em;
+  list-style: none;
+  background-color: #fff;  
+  text-align: center;  
+  transition: .6s;  
+  box-shadow: 0 5px 4px rgba(0,0,0,.5);
+  display: inline-block;
+  width: 500px;
+  height: 4rem;
+  text-align: center;
+  margin: 0.5rem;
+  padding: 0.25rem;
 }
 
-.CohortPage {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  
-    .Cohortbox {
-      display: flex;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 50px;
-      justify-items: center;
-      margin-top: 80px;
-
-      .cohortButton {
-        height: 10vw;
-        width: 10vw;
-        min-height: 150px;
-        min-width: 150px;
-    
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        
-
-        border-style: none;
-        border-radius: 10px;
-
-        font-size: 25px;
-        font-weight: 500;
-        color: rgb(48, 48, 48);
-        background-color: rgb(230, 230, 230);
-        box-shadow: 0px 10px 10px rgb(170, 175, 185);
-      }
-      .cohortButton:hover {
-        color: white;
-        background-color: #034f75;
-        border: #034f75;
-        transition: 0.3s;
-      }
-      .cohortButton:action {
-        color: white;
-        background-color: #213045;
-      }
-    }
-}
 
 .BackButton {
   width: 7vw;
@@ -525,4 +479,205 @@ body {
 .BackButton:action {
   color: white;
   background-color: #213045;
+}
+
+.DeleteButton {
+  background-color: red;
+  margin-top: 4rem;
+  display: inline-block;
+}
+
+.NevermindButton {
+  background-color: green;
+  margin-top: 4rem;
+  display: inline-block;
+}
+
+/* NavBar */
+.navbar {
+  height: 4rem;
+  background-color: #1b1b1b;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px rgb(67, 67, 67) solid;
+  border-top: 1px rgb(67, 67, 67) solid;
+  margin-bottom: 1rem;
+  display: grid;
+  grid-template-columns: 2fr 7fr 1fr; 
+  grid-template-rows: auto; 
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  z-index: 1;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  opacity: 0.95;
+  a {
+    color: white;
+  }
+
+  a:hover {
+    color: rgb(250,250,250);
+  }
+}
+
+.title {
+  word-wrap: normal;
+  grid-area: 1 / 1 / 2 / 2;
+  font-size: 2em;
+  color: white;
+  height: 4rem;
+  margin-top: -0.5rem;
+  cursor:default;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+  width: 20%;
+  text-align:center;
+
+}
+
+.navbar-search {
+  grid-area: 1 / 2 / 2 / 3;
+  padding: 1rem;
+  height: 4rem;
+  border-radius: 1px rgb(67, 67, 67) solid;
+  width: 65%;
+  margin-top: -1rem;
+}
+
+.owner-search {
+  display:inline-block;
+  height: 2rem;
+  width: 100%;
+  margin-left: 0;
+  margin-right: auto;
+  caret-color: white;
+}
+
+.search-input {
+  font-size: small;
+  height: 3rem;
+  margin-top: calc(2rem * -2.9);
+  width: 100%;
+  padding: 10px;
+  padding-left: 12.5px;
+  border-radius: 1px rgb(67, 67, 67) solid;
+  text-align: left;
+  background-color: rgb(40, 40, 40);
+  color: #c3c3c3;
+  font-weight:300;
+  border: 1px solid #484a4d;
+}
+
+.search-input:focus {
+  border: 1px solid #717272;
+}
+
+.search-button {
+  font-size: 20px;
+  color: #c3c3c3;
+  margin-right: 0.1rem;
+  margin-left: auto;
+  margin-top: calc(-3.05rem);
+  text-decoration: none;
+  width: calc(4rem * 0.9);
+  height: 4rem;
+  border-radius: 50%;
+  padding: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: filter 300ms;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background:none;
+}
+
+.search-button:hover{
+  color: #aeaeae;
+}
+
+.search-button:active{
+  color: #909090;
+}
+
+.navbar-nav {
+  grid-area: 1 / 3 / 2 / 4;
+  list-style: none;
+  width: calc(4rem * 1.6);
+  height: 4rem;
+  justify-content: right;
+  margin-top: -0.009rem;
+  margin-right: 0;
+  margin-left: auto;
+  padding-top: 0.2rem;
+  padding-right: 0.3rem;
+
+}
+
+.nav-item {
+  height: 4rem;
+  display: flex;
+}
+
+.icon-button {
+  text-decoration: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: #484a4d;
+  border-radius: 50%;
+  padding: 7px;
+  margin: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: filter 300ms;
+}
+
+.icon-button:hover {
+  filter: brightness(1.2);
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.icon-button:active {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+// Dropdown Menu
+.dropdown {
+  position: absolute;
+  top: 54px;
+  width: 500px;
+  transform: translateX(-100%);
+  background-color: #1b1b1b;
+  border: 1px rgb(67, 67, 67) solid;
+  border-radius: 100px rgb(67, 67, 67) solid;
+  padding: 1rem;
+  height:230px;
+}
+
+.ddItem {
+  padding-left: 15px;
+
+}
+
+.menu-item {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border-radius: 15px;
+  padding: 0.5rem;
+  text-decoration: none;
+}
+
+.menu-item:hover {
+  background-color: #525357;
+  transition: 300ms;
+  filter: brightness(1.2);
+}
+
+.icon-right {
+  margin-left: auto;
 }

@@ -27,7 +27,7 @@ export const OrganizationContainer = (props) => {
   const orgs = [];
   for (let i = 0; i < orgList.length; i++) {
     if (orgList[i].organization !== 'Student') {
-      orgs.push(<button className='cohortButton' onClick={() => findResidents(orgList[i].organization)} >{orgList[i].organization}</button>);
+      orgs.push(<li className='orgItem' onClick={() => findResidents(orgList[i].organization)} >{orgList[i].organization}</li>);
     }
   }
 
@@ -39,15 +39,14 @@ export const OrganizationContainer = (props) => {
         !active
           ? 
           <div className="Cohortbox">
-
             {orgs} 
           </div>
           : 
           <div>
             <button className="BackButton" onClick={() => setActive(false)}>Back</button>
             <div className="Cohortbox">
-            <ResidentsListContainer residentList={residents} />
-          </div>
+              <ResidentsListContainer residentList={residents} />
+            </div>
           </div>
       }
     </div>
