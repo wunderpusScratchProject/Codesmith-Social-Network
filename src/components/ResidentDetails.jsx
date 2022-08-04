@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
-import { Navigate } from 'react-router';
+import { Navigate, useNavigate } from 'react-router';
 import { LandingPage } from './LandingPage';
 
 export const ResidentDetails = (props) => {
@@ -36,7 +36,10 @@ export const ResidentDetails = (props) => {
   const deleteUser = () => {
     const deleteRequest = async (req, res) => {
       const settings = {
-        method: 'DELETE',
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/JSON'
+        },
         body: JSON.stringify({
           name: props.user.name,
         })
@@ -49,8 +52,10 @@ export const ResidentDetails = (props) => {
         console.log(`Error occured while trying to delete your profile: ${err}`)
       }
     }
-    deleteRequest()
-    changeAuthenticated(false)
+    deleteRequest();
+    changeAuthenticated(false);
+    document.cookie = 'userId=0; path=/; max-age=0;';
+    document.cookie = 'linkedInAuthCode=0; path=/; max-age=0;';
   }
   
   return (
@@ -66,11 +71,12 @@ export const ResidentDetails = (props) => {
       }
       }>Log out</button>
       {refresh ? <Navigate to={'/'} /> : null}
+      {!isAuthenticated ? <Navigate to={'/'}/> : null }
       {/* add a delete profile option
       sends a delete request to the server
       removes cookies and auth token
     redirects users to landing page */}
-      <button onClick={() => {deleteUser()}} >Delete Profile</button>
+      <button onClick={() => {deleteUser()}  } >Delete Profile</button>
     </div>
   );
 };

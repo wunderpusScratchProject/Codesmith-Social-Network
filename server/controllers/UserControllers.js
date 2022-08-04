@@ -229,9 +229,11 @@ userControllers.registerUser = async (req, res, next) => {
 
 //delete user requiring @value ( req.body.id )
 userControllers.deleteUser = async (req, res, next) => {
+  const { name } = req.body;
+  const options = [name];
   try {
-    const text = `DELETE FROM residents WHERE id=${req.body.name}`;
-    const userDeleted = await db.query(text);
+    const text = `DELETE FROM residents WHERE name=$1`;
+    const userDeleted = await db.query(text, options);
     res.locals.userDeleted = userDeleted;
 
     return next();
@@ -241,6 +243,12 @@ userControllers.deleteUser = async (req, res, next) => {
       message: 'Erorr found @ userControllers.deleteUser',
     });
   }
+};
+
+userControllers.test = async (req, res, next) => {
+  console.log('testing middleware');
+  console.log(req.body);
+  return next();
 };
 
 module.exports = userControllers;

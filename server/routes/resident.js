@@ -24,8 +24,13 @@ router.post('/update', userControllers.updateUser, (req, res) => {
   return res.status(200);
 });
 
-router.post('/delete', userControllers.deleteUser, (req, res) => {
-  return res.status(200);
-});
+router.post(
+  '/delete',
+  userControllers.test,
+  userControllers.deleteUser,
+  (req, res) => {
+    return res.status(200);
+  }
+);
 
 module.exports = router;
