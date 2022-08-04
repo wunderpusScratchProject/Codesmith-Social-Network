@@ -1,6 +1,8 @@
 import React, { Component, useState } from 'react';
 import { useStoreState, useStoreActions } from 'easy-peasy';
-import { Navigate } from 'react-router';
+import { Navigate, useNavigate } from 'react-router';
+import { LandingPage } from './LandingPage';
+
 export const ResidentDetails = (props) => {
   const isAuthenticated = useStoreState((state) => state.isAuthenticated);
   const changeAuthenticated = useStoreActions(
@@ -30,6 +32,31 @@ export const ResidentDetails = (props) => {
       }
     }
   }
+
+  const deleteUser = () => {
+    const deleteRequest = async (req, res) => {
+      const settings = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/JSON'
+        },
+        body: JSON.stringify({
+          name: props.user.name,
+        })
+      }
+      try {
+        const response = await fetch('http://localhost:8080/residents/delete', settings)
+        const data = await response.json()
+        console.log(`profile succesfully deleted: ${data}`)
+      } catch (err) {
+        console.log(`Error occured while trying to delete your profile: ${err}`)
+      }
+    }
+    deleteRequest();
+    changeAuthenticated(false);
+    document.cookie = 'userId=0; path=/; max-age=0;';
+    document.cookie = 'linkedInAuthCode=0; path=/; max-age=0;';
+  }
   
   return (
     <div className="ResidentDetails">
@@ -43,7 +70,13 @@ export const ResidentDetails = (props) => {
         setRefresh(true);
       }
       }>Log out</button>
-      {refresh? <Navigate to={'/'}/>: null}
+      {refresh ? <Navigate to={'/'} /> : null}
+      {!isAuthenticated ? <Navigate to={'/'}/> : null }
+      {/* add a delete profile option
+      sends a delete request to the server
+      removes cookies and auth token
+    redirects users to landing page */}
+      <button onClick={() => {deleteUser()}  } >Delete Profile</button>
     </div>
   );
 };

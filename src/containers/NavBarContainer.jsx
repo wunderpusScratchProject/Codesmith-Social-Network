@@ -6,10 +6,10 @@ export const NavBar = (props) => {
   const [refresh, setRefresh] = useState(false);
   const [active, setActive] = useState('home');
   let change = false;
-  useEffect(() => {
-    console.log('use effect called')
-    
-  });
+  // useEffect(() => {
+  //   console.log('use effect called')
+  //   if (refresh) console.log('refreshed');
+  // });
   function clickFunction(focus) {
     //props.setActive(focus);
     console.log('button clicked');
@@ -32,7 +32,7 @@ export const NavBar = (props) => {
         <button className="CohortButton" onClick={() => clickFunction('cohort')}>Cohort</button>
         <button className="UserButton" onClick={() => clickFunction('user')}>User</button>
       </div>
-      {refresh? <Navigate to={`/${active}`} /> : null}
+      {refresh ? <Navigate to={`/${active}`} /> : null}
     </div>
   );
 };

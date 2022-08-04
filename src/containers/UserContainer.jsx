@@ -3,7 +3,9 @@ import { ResidentsListContainer } from './ResidentsListContainer.jsx';
 import { ResidentBox } from '../components/ResidentBox.jsx';
 import { ResidentDetails } from '../components/ResidentDetails.jsx';
 import { NavBar } from './NavBarContainer.jsx';
-import { useStoreState,useStoreActions } from 'easy-peasy';
+import { useStoreState, useStoreActions } from 'easy-peasy';
+
+
 export const UserContainer = (props) => {
   const isAuthenticated = useStoreState((state) => state.isAuthenticated);
   const changeAuthenticated = useStoreActions( (actions) => actions.changeAuthenticated);

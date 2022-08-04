@@ -12,19 +12,26 @@ userControllers.loadUsers = async (req, res, next) => {
     res.locals.usersLoad = usersLoad.rows;
     return next();
   } catch (error) {
-    return next({ log: `userControllers.loadUsers error: ${error}`, message: 'Error found @ userControllers.loadUsers' });
+    return next({
+      log: `userControllers.loadUsers error: ${error}`,
+      message: 'Error found @ userControllers.loadUsers',
+    });
   }
 };
 
 // Load list of all organizations when orgs tab is clicked.
 userControllers.loadOrgs = async (req, res, next) => {
-  const text = 'SELECT DISTINCT organization FROM residents ORDER BY organization';
+  const text =
+    'SELECT DISTINCT organization FROM residents ORDER BY organization';
   try {
     const orgsLoad = await db.query(text);
     res.locals.orgsLoad = orgsLoad.rows;
     return next();
   } catch (error) {
-    return next({ log: `userControllers.loadOrgs error: ${error}`, message: 'Error found @ userControllers.loadOrgs' });
+    return next({
+      log: `userControllers.loadOrgs error: ${error}`,
+      message: 'Error found @ userControllers.loadOrgs',
+    });
   }
 };
 
@@ -36,24 +43,28 @@ userControllers.loadCohorts = async (req, res, next) => {
     res.locals.cohortsLoad = cohortsLoad.rows;
     return next();
   } catch (error) {
-    return next({ log: `userControllers.loadCohorts error: ${error}`, message: 'Erorr found @ userControllers.loadCohorts' });
+    return next({
+      log: `userControllers.loadCohorts error: ${error}`,
+      message: 'Erorr found @ userControllers.loadCohorts',
+    });
   }
 };
 
 // Loads user profile when user is clicked throughout tabs.
 userControllers.loadUserProfile = async (req, res, next) => {
-  const { id } = req.params; 
+  const { id } = req.params;
   const text = `SELECT * FROM residents WHERE id=${id}`;
   try {
     const profile = await db.query(text);
     res.locals.profile = profile.rows;
     return next();
   } catch (error) {
-    return next({ log: `userControllers.loadUserProfile error: ${error}`, message: 'Erorr found @ userControllers.loadUserProfile' });
+    return next({
+      log: `userControllers.loadUserProfile error: ${error}`,
+      message: 'Erorr found @ userControllers.loadUserProfile',
+    });
   }
 };
-
-
 
 //Controller to find user.
 //If req.query.query exists, we are trying to find a specific user
@@ -69,7 +80,10 @@ userControllers.findUserByName = async (req, res, next) => {
     res.locals.userFound = userFound.rows;
     return next();
   } catch (error) {
-    return next({ log: `userControllers.findUser error: ${error}`, message: 'Erorr found @ userControllers.findUser' });
+    return next({
+      log: `userControllers.findUser error: ${error}`,
+      message: 'Erorr found @ userControllers.findUser',
+    });
   }
 };
 
@@ -82,7 +96,10 @@ userControllers.findUserById = async (req, res, next) => {
     res.locals.userFound = userFound.rows[0];
     return next();
   } catch (error) {
-    return next({ log: `userControllers.findUser error: ${error}`, message: 'Erorr found @ userControllers.findUser' });
+    return next({
+      log: `userControllers.findUser error: ${error}`,
+      message: 'Erorr found @ userControllers.findUser',
+    });
   }
 };
 
@@ -91,13 +108,16 @@ userControllers.findUserById = async (req, res, next) => {
 userControllers.findUserByOrganization = async (req, res, next) => {
   console.log(req.body);
   const text = `SELECT * FROM residents WHERE LOWER(organization)=LOWER('${req.body.organization}')`;
-  
+
   try {
     const usersFound = await db.query(text);
     res.locals.usersFound = usersFound.rows;
     return next();
   } catch (error) {
-    return next({ log: `userControllers.findUserByOrganization error: ${error}`, message: 'Erorr found @ userControllers.findUserByOrganization' });
+    return next({
+      log: `userControllers.findUserByOrganization error: ${error}`,
+      message: 'Erorr found @ userControllers.findUserByOrganization',
+    });
   }
 };
 
@@ -106,13 +126,16 @@ userControllers.findUserByOrganization = async (req, res, next) => {
 userControllers.findUserByCohort = async (req, res, next) => {
   console.log(req.body.cohort);
   const text = `SELECT * FROM residents WHERE LOWER(cohort)=LOWER('${req.body.cohort}')`;
-  
+
   try {
     const usersFound = await db.query(text);
     res.locals.usersFound = usersFound.rows;
     return next();
   } catch (error) {
-    return next({ log: `userControllers.findUserByCohort error: ${error}`, message: 'Erorr found @ userControllers.findUserByCohort' });
+    return next({
+      log: `userControllers.findUserByCohort error: ${error}`,
+      message: 'Erorr found @ userControllers.findUserByCohort',
+    });
   }
 };
 
@@ -126,17 +149,19 @@ userControllers.verifyUserExists = async (req, res, next) => {
     const idFound = await db.query(text, [email]);
     //if email exists: create property on res.locals to skip create user middleware
     if (idFound.rows.length) {
-      console.log('We found an id',idFound.rows[0]);
+      console.log('We found an id', idFound.rows[0]);
       res.locals.shouldSkipCreateUser = true;
       res.cookie('userId', idFound.rows[0].id);
     } else {
       console.log('No such user exists. Creating one');
       res.locals.shouldSkipCreateUser = false;
-    } 
+    }
     return next();
   } catch (error) {
-    return next({ log: `userControllers.verifyUserExists error: ${error}`, message: 'Erorr found @ userControllers.VerifyUserExists' });
-
+    return next({
+      log: `userControllers.verifyUserExists error: ${error}`,
+      message: 'Erorr found @ userControllers.VerifyUserExists',
+    });
   }
 };
 
@@ -144,23 +169,26 @@ userControllers.verifyUserExists = async (req, res, next) => {
 //@value ( res.locals.userCreated ) New user created in table residents
 userControllers.createUser = async (req, res, next) => {
   try {
-    if(res.locals.shouldSkipCreateUser) return next();
-    const {
-      name,
-      email,
-    } = res.locals;
+    if (res.locals.shouldSkipCreateUser) return next();
+    const { name, email } = res.locals;
     const values = [name, '', '', '', '', '', email];
-    const text = 'INSERT INTO residents (name, photo, cohort, organization, linkedin, message, email) VALUES($1, $2, $3, $4, $5, $6, $7)';
+    const text =
+      'INSERT INTO residents (name, photo, cohort, organization, linkedin, message, email) VALUES($1, $2, $3, $4, $5, $6, $7)';
     await db.query(text, values);
-    const userCreated = await db.query('SELECT id FROM residents ORDER BY id DESC LIMIT 1');
+    const userCreated = await db.query(
+      'SELECT id FROM residents ORDER BY id DESC LIMIT 1'
+    );
     console.log(userCreated.rows[0].id);
 
     res.cookie('userId', userCreated.rows[0].id);
-    
+
     res.locals.userCreated = userCreated;
     return next();
   } catch (err) {
-    return next({ log: `userControllers.createUser error: ${err}`, message: 'Erorr found @ userControllers.createUser' });
+    return next({
+      log: `userControllers.createUser error: ${err}`,
+      message: 'Erorr found @ userControllers.createUser',
+    });
   }
 };
 
@@ -169,52 +197,58 @@ userControllers.createUser = async (req, res, next) => {
 //@value ( res.locals.updateUser ) return updated user
 userControllers.updateUser = async (req, res, next) => {
   try {
-    const {
-      name,
-      photo,
-      cohort,
-      organization,
-      linkedin, 
-      email
-    } = req.body.user;
+    const { name, photo, cohort, organization, linkedin, email } =
+      req.body.user;
     const values = [name, photo, cohort, organization, linkedin];
     const text = `UPDATE residents SET name='${name}', photo='${photo}', cohort='${cohort}', organization='${organization}', linkedin='${linkedin}', email='${email}' WHERE id='${req.body.id}'`;
     const updatedUser = await db.query(text);
     res.locals.updatedUser = updatedUser;
     return next();
   } catch (err) {
-    return next({ log: `userControllers.updateUser error: ${err}`, message: 'Erorr found @ userControllers.updateUser' });
+    return next({
+      log: `userControllers.updateUser error: ${err}`,
+      message: 'Erorr found @ userControllers.updateUser',
+    });
   }
 };
 // Register new user
 userControllers.registerUser = async (req, res, next) => {
   try {
-    const {
-      id,
-      cohort,
-      organization,
-      linkedin
-    } = req.body;
+    const { id, cohort, organization, linkedin } = req.body;
     const text = `UPDATE residents SET cohort='${cohort}', organization='${organization}', linkedin='${linkedin}' WHERE id='${id}'`;
     const registeredUser = await db.query(text);
     res.locals.registeredUser = registeredUser;
     return next();
   } catch (err) {
-    return next({ log: `userControllers.registerUser error: ${err}`, message: 'Erorr found @ userControllers.registerUser' });
+    return next({
+      log: `userControllers.registerUser error: ${err}`,
+      message: 'Erorr found @ userControllers.registerUser',
+    });
   }
 };
 
 //delete user requiring @value ( req.body.id )
 userControllers.deleteUser = async (req, res, next) => {
+  const { name } = req.body;
+  const options = [name];
   try {
-    const text = `DELETE FROM residents WHERE id=${req.body.id}`;
-    const userDeleted = await db.query(text);
+    const text = `DELETE FROM residents WHERE name=$1`;
+    const userDeleted = await db.query(text, options);
     res.locals.userDeleted = userDeleted;
-    
+
     return next();
   } catch (err) {
-    return next({ log: `userControllers.deleteUser error: ${err}`, message: 'Erorr found @ userControllers.deleteUser' });
+    return next({
+      log: `userControllers.deleteUser error: ${err}`,
+      message: 'Erorr found @ userControllers.deleteUser',
+    });
   }
+};
+
+userControllers.test = async (req, res, next) => {
+  console.log('testing middleware');
+  console.log(req.body);
+  return next();
 };
 
 module.exports = userControllers;
