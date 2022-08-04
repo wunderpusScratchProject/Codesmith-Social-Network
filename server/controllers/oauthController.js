@@ -12,7 +12,7 @@ const oauthController = {};
 // TODO (stretch feature, to prevent CSRF attacks, which don't matter on our site, since a malicious actor can't do anything except mess with the user profile a bit): Generate unique state and store it in use cookies. https://auth0.com/docs/secure/attack-protection/state-parameters
 
 // response from linkedin authorization code sent to req.query.code
-// within this middleware function, the server sends back the authorization code and client secret 
+// within this middleware function, the server sends back the authorization code and client secret
 // TODO: save access token within res.cookie instead of authCode
 oauthController.exchangeCode = async (req, res, next) => {
   try {
@@ -23,15 +23,15 @@ oauthController.exchangeCode = async (req, res, next) => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
-        }
-      });
+        },
+      }
+    );
     const response = await accessToken.json();
     console.log('Response: ', response);
     res.locals.accessToken = response.access_token;
     res.cookie('linkedInAuthCode', authCode);
     return next();
-  } 
-  catch(err) {
+  } catch (err) {
     console.log(err);
     return next(err);
   }
@@ -39,32 +39,31 @@ oauthController.exchangeCode = async (req, res, next) => {
 
 oauthController.callMeAPI = async (req, res, next) => {
   try {
-    const result = await fetch(
-      'https://api.linkedin.com/v2/me', {
-        headers: {
-          Authorization: 'Bearer ' + res.locals.accessToken
-        }
-      }
-    );
+    const result = await fetch('https://api.linkedin.com/v2/me', {
+      headers: {
+        Authorization: 'Bearer ' + res.locals.accessToken,
+      },
+    });
     const parsedResult = await result.json();
-    res.locals.name = parsedResult.localizedFirstName + ' ' + parsedResult.localizedLastName;
+    res.locals.name =
+      parsedResult.localizedFirstName + ' ' + parsedResult.localizedLastName;
     // console.log('me API call result');
     // console.log(parsedResult);
     return next();
-  }
-  catch(err) {
+  } catch (err) {
     return next(err);
   }
 };
 
 oauthController.callEmailAPI = async (req, res, next) => {
   try {
-    console.log('callEmailAPI')
+    console.log('callEmailAPI');
     const result = await fetch(
-      'https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))', {
+      'https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))',
+      {
         headers: {
-          Authorization: 'Bearer ' + res.locals.accessToken
-        }
+          Authorization: 'Bearer ' + res.locals.accessToken,
+        },
       }
     );
     const parsedResult = await result.json();
@@ -72,8 +71,7 @@ oauthController.callEmailAPI = async (req, res, next) => {
     // console.log(parsedResult.elements[0]['handle~']);
     res.locals.email = parsedResult.elements[0]['handle~'].emailAddress;
     return next();
-  }
-  catch(err) {
+  } catch (err) {
     return next(err);
   }
 };
@@ -89,7 +87,7 @@ oauthController.userComplete = async (req, res, next) => {
     res.locals.complete = complete;
     return next();
   } catch (err) {
-    return next({log: 'Error caight in userComplete' });
+    return next({ log: 'Error caight in userComplete' });
   }
 };
 // handle getting basic profile info
@@ -99,22 +97,22 @@ oauthController.userComplete = async (req, res, next) => {
 oauthController.callProfilePicAPI = async (req, res, next) => {
   try {
     const result = await fetch(
-      'https://api.linkedin.com/v2/me?projection=(id,firstName,lastName,profilePicture(displayImage~:playableStreams))', {
+      'https://api.linkedin.com/v2/me?projection=(id,firstName,lastName,profilePicture(displayImage~:playableStreams))',
+      {
         headers: {
-          Authorization: 'Bearer ' + res.locals.accessToken
-        }
+          Authorization: 'Bearer ' + res.locals.accessToken,
+        },
       }
     );
     const parsedResult = await result.json();
-    res.locals.profilePic = parsedResult.profilePicture['displayImage~'].elements[0].identifiers[0].identifier;
+    res.locals.profilePic =
+      parsedResult.profilePicture[
+        'displayImage~'
+      ].elements[0].identifiers[0].identifier;
     return next();
   } catch (err) {
     return next(err);
   }
-}
-
+};
 
 module.exports = oauthController;
-
-'AQTLzsQiF7FSapPDta6Clk7G6hMcE7qNzdWmsbCTCrVevGiGyCJer1eAEBc26kXriCPTSXRy5mXLWIbIB7EJi30b9HZPLWx2keoI2IoRNUPWbtT1kh7fpiha1m_N4xdxIhA1B5dMUlI7Y8HQd6fEWGpau6LABrqLTakmBZFL8M1nm5GoBmozA08jIMt7iAZhy33u85rWrMbfui2Ehng'
-'AQSwWynk77TSD7-hXhaWbUymspIOa8p7umlMDAzabhPmCK3eR-qSaKB11OmoFzPCXkRHjWcaKI_dfEbpZMuZoQk8WNwz1aXd-fkRDk0W6EWx_xBFPoBG4vF92mawjfonQ4DdIAOYS_kGpgCzYPjRlXQXEqBKBFj2NHBWYsPaGzpVVu02pMywRXmwSpN3JTOTKWONWfdnoPyowCSKzto'
