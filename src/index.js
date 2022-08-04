@@ -38,7 +38,7 @@ ReactDOM.render(
         <Route path="/organization" element={<OrganizationContainer />} />
         <Route path="/cohort" element={<CohortContainer />} />
         <Route path="/user" element={<UserContainer />} />
-        <Route path="/search" elemtn = {<SearchContainer/>}/>
+        <Route path="/search" element={<SearchContainer />} />
       </Routes>
     </HashRouter>
   </StoreProvider>,

@@ -8,15 +8,15 @@ export const NavBar = (props) => {
   let change = false;
   useEffect(() => {
     console.log('use effect called')
-    if (refresh) console.log('refreshed');
+    
   });
   function clickFunction(focus) {
     //props.setActive(focus);
     console.log('button clicked');
     setRefresh(true);
     setActive(focus);
-    change = true
-    console.log(refresh)
+    change = true;
+    console.log(refresh);
     //useNavigate(`/${focus}`);
   }
   //if(refresh) useNavigate(`/residents`);
