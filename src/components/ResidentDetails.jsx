@@ -2,6 +2,23 @@ import React, { Component, useState } from 'react';
 
 export const ResidentDetails = (props) => {
   
+  const [deleteActive, setDeleteStatus] = useState(false);
+
+  function initialDelete() {
+    return (
+      <button className="DeleteButton" onClick={() => setDeleteStatus(true)}>Delete Account</button> 
+    );
+  }
+  
+  function confirmDelete(props) {
+    return (
+      <>
+        <button className="DeleteButton" onClick={props.deleteFunction}>Please confirm delete account</button>
+        <button className="NevermindButton" onClick={() => setDeleteStatus(false)}>Nevermind</button> 
+      </>
+    );
+  }
+
   const elems = [];
   console.log(props.user);
   for (const key in props.user) {
@@ -36,6 +53,8 @@ export const ResidentDetails = (props) => {
         props.changeAuthenticated(false);
       }
       }>Log out</button>
+      { !deleteActive && initialDelete() }
+      { deleteActive && confirmDelete(props) }
     </div>
   );
 };

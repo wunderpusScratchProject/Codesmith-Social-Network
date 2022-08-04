@@ -67,13 +67,35 @@ export const UserContainer = (props) => {
       .then(changeSaved(true));
   }
 
-  console.log(user);
+  function deleteFunction() {
+    console.log(user);
+    fetch('http://localhost:8080/residents/delete', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id: document.cookie.split('; userId=')[1],
+      })
+    })
+      .then(console.log('account deleted'))
+      .then(
+        document.cookie = 'userId=0; path=/; max-age=0;',
+        document.cookie = 'linkedInAuthCode=0; path=/; max-age=0;',
+        props.changeAuthenticated(false),
+      );
+  }
+
   return (
     <div className="UserContainer">
       <div className="ResidentsProfile">
         <ResidentBox photo={userIcon.photo} name={userIcon.name}/>
       </div>
-      <ResidentDetails user={user} changeAuthenticated={props.changeAuthenticated} saveFunction={saveFunction} changeInput={changeInput}/>
+      <ResidentDetails 
+        user={user} 
+        changeAuthenticated={props.changeAuthenticated} 
+        saveFunction={saveFunction} 
+        changeInput={changeInput} 
+        deleteFunction={deleteFunction}
+        />
     </div>
   );
 };

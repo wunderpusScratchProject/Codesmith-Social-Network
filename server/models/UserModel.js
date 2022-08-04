@@ -38,8 +38,6 @@ module.exports = {
 
 
 
-
-
 // MAYBE
 // case 'species':
 //       const { classification, average_height, average_lifespan, language, homeworld } = details;

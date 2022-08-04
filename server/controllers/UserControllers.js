@@ -227,7 +227,7 @@ userControllers.deleteUser = async (req, res, next) => {
     const text = `DELETE FROM residents WHERE id=${req.body.id}`;
     const userDeleted = await db.query(text);
     res.locals.userDeleted = userDeleted;
-    
+    res.cookie('linkedInAuthCode', null);
     return next();
   } catch (err) {
     return next({ log: `userControllers.deleteUser error: ${err}`, message: 'Erorr found @ userControllers.deleteUser' });

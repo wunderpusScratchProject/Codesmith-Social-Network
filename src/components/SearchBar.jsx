@@ -20,9 +20,18 @@ export const SearchBar = (props) => {
   }
 
   return (
-    <div className="SearchBarButton">
-      <input type="text" className="SearchBar" placeholder="Search by name, cohort, or org..." value={textValue} onKeyDown={enterFunction} onChange={(e) => setTextValue(e.target.value)}></input>
-      <button className="SearchButton" onClick={clickFunction}>Search</button>
+    <div className="navbar-search">
+      <div className="owner-search">
+        <input type="text" 
+          className="search-input" 
+          placeholder="Search by name, cohort, or org..." 
+          value={textValue} 
+          onKeyDown={enterFunction} 
+          onChange={(e) => setTextValue(e.target.value)} />
+      </div>
+      <div className="search-button">
+        <button onClick={clickFunction}>➜</button>
+      </div>
     </div>
   );
 };
