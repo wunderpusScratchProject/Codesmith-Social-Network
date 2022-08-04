@@ -24,3 +24,5 @@ export const LandingPage = (props) => {
     </div>
   );
 };
+
+export default LandingPage;

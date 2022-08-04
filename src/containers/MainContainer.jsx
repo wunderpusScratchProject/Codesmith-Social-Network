@@ -47,7 +47,7 @@ export default function MainContainer() {
   });
 
   return (
-    <div className="MainContainer">
+    <div role='div' className="MainContainer">
       {
         isAuthenticated
           ? cohortIsSet

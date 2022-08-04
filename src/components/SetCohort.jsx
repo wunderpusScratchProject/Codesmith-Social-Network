@@ -67,3 +67,5 @@ export const SetCohort = (props) => {
     </div>
   );
 };
+
+export default SetCohort;
