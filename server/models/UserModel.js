@@ -12,7 +12,7 @@ module.exports = {
     console.log('Query: ', text);
     return pool.query(text, params, callback);
   }
-}
+};
 
 
 
@@ -22,10 +22,12 @@ module.exports = {
 // residents (
 // 	  id serial PRIMARY KEY,
 // 	  name varchar( 100 )  NOT NULL,
-//    photo varchar( 150 ),
-// 	  cohort varchar( 150 ) NOT NULL,
-//    organization varchar( 150 ),
-//    linkedin varchar( 150 ) NOT NULL
+//    photo varchar( 300 ),
+// 	  cohort varchar( 300 ) NOT NULL,
+//    organization varchar( 300 ),
+//    linkedin varchar( 300 ) NOT NULL,
+//    email varchar( 300 ) NOT NULL,
+//    message varchar( 300 )
 // );
 
 

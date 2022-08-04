@@ -147,9 +147,10 @@ userControllers.createUser = async (req, res, next) => {
     if(res.locals.shouldSkipCreateUser) return next();
     const {
       name,
+      profilePic,
       email,
     } = res.locals;
-    const values = [name, '', '', '', '', '', email];
+    const values = [name, profilePic, '', '', '', '', email];
     const text = 'INSERT INTO residents (name, photo, cohort, organization, linkedin, message, email) VALUES($1, $2, $3, $4, $5, $6, $7)';
     await db.query(text, values);
     const userCreated = await db.query('SELECT id FROM residents ORDER BY id DESC LIMIT 1');
@@ -202,7 +203,7 @@ userControllers.registerUser = async (req, res, next) => {
   } catch (err) {
     return next({ log: `userControllers.registerUser error: ${err}`, message: 'Erorr found @ userControllers.registerUser' });
   }
-};
+};``
 
 //delete user requiring @value ( req.body.id )
 userControllers.deleteUser = async (req, res, next) => {
@@ -210,6 +211,7 @@ userControllers.deleteUser = async (req, res, next) => {
     const text = `DELETE FROM residents WHERE id=${req.body.id}`;
     const userDeleted = await db.query(text);
     res.locals.userDeleted = userDeleted;
+    res.cookie('userId', null); 
     
     return next();
   } catch (err) {

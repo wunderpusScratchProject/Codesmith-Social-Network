@@ -1,1 +1,3 @@
 node_modules
+server/secrets.js
+JWT.env
